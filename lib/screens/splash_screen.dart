@@ -1,25 +1,22 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/login_screen.dart';
-
+import 'package:order_booking_app/screens/camera_screen.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
-
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
     // Navigate to LoginScreen after 4 seconds
     Timer(
-      const Duration(seconds: 4),
+      const Duration(seconds: 3),
           () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          MaterialPageRoute(builder: (context) => const CameraScreen()),
         );
       },
     );

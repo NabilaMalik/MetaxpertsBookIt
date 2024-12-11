@@ -6,16 +6,13 @@ import 'new_screen.dart'; // Import the new screen
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
-
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
-
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-
   @override
   void dispose() {
     _passwordController.dispose();
@@ -40,7 +37,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     return null;
   }
-
   String? _validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please confirm your password';
@@ -49,7 +45,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     return null;
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -231,7 +226,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
   Widget _buildTextField({
     required String label,
     required IconData icon,

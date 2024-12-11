@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/login_screen.dart';
-import 'package:order_booking_app/screens/splash_screen.dart';
-
+import 'package:order_booking_app/screens/location_screen.dart';
 class CameraScreen extends StatelessWidget {
   const CameraScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    // Define a list of colors for the ellipses
+    // Get screen size and orientation
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     List<Color> ellipseColors = [
       Colors.blue,
       Colors.grey,
@@ -17,36 +16,35 @@ class CameraScreen extends StatelessWidget {
       Colors.grey,
       Colors.grey,
     ];
-
     return Scaffold(
       body: Stack(
         children: [
-          // Blue background container
           Container(
-            color: Colors.blue, // Set the background color to blue
-            width: double.infinity, // Fill the entire width of the screen
-            height: double.infinity, // Fill the entire height of the screen
-            child: Column(
-              children: [
-                const SizedBox(height: 100), // Add spacing from the top
-                Center(
-                  child: Image.asset(
-                    'assets/images/camera-removebg-preview.png', // Replace with your image path
-                    width: 200,
-                    height: 200,
-                  ),
+            color: Colors.blue,
+            width: screenWidth,
+            height: screenHeight,
+          ),
+          // Add Camera Icon at the center top
+          Positioned(
+            top: screenHeight * 0.15, // Position the icon relative to screen height
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                child: Icon(
+                  Icons.camera_alt,
+                  size: screenWidth * 0.5,
+                  color: Colors.white,
                 ),
-              ],
+              ),
             ),
           ),
-
-          // White container with top padding and border radius
           Positioned(
-            top: 364, // Position the white container from the top
+            top: screenHeight * 0.42,
             left: 0,
             right: 0,
             child: Container(
-              height: 770, // Set height of the white container
+              height: screenHeight * 0.64,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -54,45 +52,47 @@ class CameraScreen extends StatelessWidget {
                   topRight: Radius.circular(35),
                 ),
               ),
-              padding: const EdgeInsets.only(top: 10, bottom: 409), // Padding inside the white container
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.01,
+                bottom: screenHeight * 0.3,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add seven ellipses in a row with different colors, before the text
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
                       return Container(
-                        width: 14,
-                        height: 14,
-                        margin: const EdgeInsets.symmetric(horizontal: 5), // Add space between ellipses
+                        width: screenWidth * 0.035,
+                        height: screenWidth * 0.035,
+                        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
                         decoration: BoxDecoration(
-                          color: ellipseColors[index], // Use the color from the list
-                          shape: BoxShape.circle, // Make each shape an ellipse (circle)
+                          color: ellipseColors[index],
+                          shape: BoxShape.circle,
                         ),
                       );
                     }),
                   ),
-                  const SizedBox(height: 30), // Space between ellipses and text
-
-                  // Existing Text
+                  SizedBox(height: screenHeight * 0.03),
                   const Text(
                     'Camera Permission',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.black, // Text color
+                      color: Colors.black,
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // New Text with padding
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 49.0, vertical: 45.0), // Add padding here
-                    child: Text(
-                      'Granting permission for camera to take selfie makes your login secure with AI integration in the tool, which minimizes the chances of someone else going through your data.',
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.1,
+                      vertical: screenHeight * 0.03,
+                    ),
+                    child: const Text(
+                      'Granting permission for the camera to take a selfie makes your login secure with AI integration in the tool, which minimizes the chances of someone else going through your data.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.black, // Slightly lighter text color
+                        color: Colors.black,
                         fontSize: 18,
                       ),
                     ),
@@ -101,16 +101,14 @@ class CameraScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Button for navigation
           Positioned(
-            bottom: 50, // Position button 50 pixels from the bottom
-            left: 50, // Fixed left position
-            right: 50, // Fixed right position
+            bottom: screenHeight * 0.05,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
-                padding: const EdgeInsets.symmetric(vertical: 15),
+                backgroundColor: Colors.blue,
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -119,13 +117,13 @@ class CameraScreen extends StatelessWidget {
                 // Navigate to SplashScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SplashScreen()), // Replace with your desired screen
+                  MaterialPageRoute(builder: (context) => const LocationScreen()),
                 );
               },
               child: const Text(
-                'Go to Login Screen',
+                'ALLOW',
                 style: TextStyle(
-                  color: Colors.white, // Text color
+                  color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

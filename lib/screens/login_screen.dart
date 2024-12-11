@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/camera_screen.dart';
 import 'package:order_booking_app/screens/signup_screen.dart';
-import 'package:order_booking_app/screens/splash_screen.dart';
 import '../components/under_part.dart';
 import '../constants.dart';
 import '../widgets/rounded_button.dart';
@@ -238,16 +236,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                               ),
                               const SizedBox(height: 40),
-                              UnderPart(
-                                title: "Don't have an account?",
-                                navigatorText: "Login here",
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => const CameraScreen()));
-                                },
-                              ),
-
-
                               const SizedBox(height: 40),
                               iconButton(context),
                               const SizedBox(height: 40),
