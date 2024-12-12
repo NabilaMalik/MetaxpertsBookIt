@@ -50,7 +50,7 @@ class PhoneScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.64, // Set height relative to screen height
+              height: screenHeight * 0.65, // Set height relative to screen height
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(

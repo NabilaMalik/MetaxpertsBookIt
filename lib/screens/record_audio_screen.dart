@@ -54,7 +54,7 @@ class RecordAudioScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.55, // Set height relative to screen height
+              height: screenHeight * 0.59, // Set height relative to screen height
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
