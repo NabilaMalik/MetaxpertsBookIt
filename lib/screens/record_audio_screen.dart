@@ -36,7 +36,7 @@ class RecordAudioScreen extends StatelessWidget {
             right: 0,
             child: Center(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle, // Maintain circular shape
                 ),
                 child: Icon(
@@ -47,14 +47,12 @@ class RecordAudioScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // White container with top padding and border radius
           Positioned(
-            top: screenHeight * 0.45, // Position the white container relative to screen height
+            top: screenHeight * 0.45,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.59, // Set height relative to screen height
+              height: screenHeight * 0.59,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -69,7 +67,6 @@ class RecordAudioScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add seven ellipses in a row with different colors, before the text
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
@@ -84,9 +81,7 @@ class RecordAudioScreen extends StatelessWidget {
                       );
                     }),
                   ),
-                  SizedBox(height: screenHeight * 0.03), // Space between ellipses and text
-
-                  // Existing Text
+                  SizedBox(height: screenHeight * 0.03),
                   const Text(
                     'Mic Permission',
                     textAlign: TextAlign.center,
@@ -96,7 +91,6 @@ class RecordAudioScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // New Text with padding
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.1,
@@ -115,8 +109,6 @@ class RecordAudioScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Button for navigation
           Positioned(
             bottom: screenHeight * 0.05, // Position button relative to screen height
             left: screenWidth * 0.1, // Fixed left position

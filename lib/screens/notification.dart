@@ -4,11 +4,8 @@ class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    // Get screen size and orientation
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
-    // Define a list of colors for the ellipses
     List<Color> ellipseColors = [
       Colors.grey,
       Colors.grey,
@@ -18,43 +15,37 @@ class NotificationScreen extends StatelessWidget {
       Colors.grey,
       Colors.blue,
     ];
-
     return Scaffold(
       body: Stack(
         children: [
-          // Green background container
           Container(
-            color: Colors.blue, // Set the background color to green
-            width: screenWidth, // Use full screen width
-            height: screenHeight, // Use full screen height
+            color: Colors.blue,
+            width: screenWidth,
+            height: screenHeight,
           ),
-
-          // Add Location Icon at the center top
           Positioned(
-            top: screenHeight * 0.15, // Position the icon relative to screen height
+            top: screenHeight * 0.15,
             left: 0,
             right: 0,
             child: Center(
               child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle, // Maintain circular shape
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  Icons.notifications_active_rounded, // Use the location icon
-                  size: screenWidth * 0.5, // Adjust size relative to screen width
-                  color: Colors.white, // Set the color of the icon to white
+                  Icons.notifications_active_rounded,
+                  size: screenWidth * 0.5,
+                  color: Colors.white,
                 ),
               ),
             ),
           ),
-
-          // White container with top padding and border radius
           Positioned(
-            top: screenHeight * 0.45, // Position the white container relative to screen height
+            top: screenHeight * 0.47,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.62, // Set height relative to screen height
+              height: screenHeight * 0.62,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -69,7 +60,7 @@ class NotificationScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add seven ellipses in a row with different colors, before the text
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
@@ -96,7 +87,6 @@ class NotificationScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // New Text with padding
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.1,

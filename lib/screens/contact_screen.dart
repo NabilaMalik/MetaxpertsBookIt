@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:order_booking_app/screens/orderbooking_screen.dart';
 import 'package:order_booking_app/screens/phone_screen.dart';
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
@@ -101,6 +102,29 @@ class ContactScreen extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: screenHeight * 0.15,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OrderbookingScreen(),
+                  ),
+                );
+              },
+
+              child: const Text(
+                "Go to New Screen",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                ),
               ),
             ),
           ),

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/location_screen.dart';
 import 'package:order_booking_app/screens/record_audio_screen.dart';
-import 'package:order_booking_app/screens/splash_screen.dart';
-
 class StorageScreen extends StatelessWidget {
   const StorageScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    // Get screen size and orientation
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
     // Define a list of colors for the ellipses
     List<Color> ellipseColors = [
       Colors.grey,
@@ -22,7 +16,6 @@ class StorageScreen extends StatelessWidget {
       Colors.grey,
       Colors.grey,
     ];
-
     return Scaffold(
       body: Stack(
         children: [
@@ -30,32 +23,25 @@ class StorageScreen extends StatelessWidget {
           Container(
             color: Colors.blue, // Set the background color to blue
             width: screenWidth, // Use full screen width
-            height: screenHeight, // Use full screen height
+            height: screenHeight,
           ),
-
-          // Add Camera Icon at the center top
           Positioned(
-            top: screenHeight * 0.15, // Position the icon relative to screen height
+            top: screenHeight * 0.15,
             left: 0,
             right: 0,
             child: Center(
-              child: Container(
-                child: Icon(
-                  Icons.storage_outlined, // Use the camera icon
-                  size: screenWidth * 0.5, // Adjust size relative to screen width
-                  color: Colors.white, // Set the color of the icon to white
-                ),
+              child: Icon(
+                Icons.storage_outlined,
+                size: screenWidth * 0.5,
+                color: Colors.white,
               ),
             ),
-          ),
-
-          // White container with top padding and border radius
-          Positioned(
-            top: screenHeight * 0.42, // Position the white container relative to screen height
+          ), Positioned(
+            top: screenHeight * 0.42,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.64, // Set height relative to screen height
+              height: screenHeight * 0.64,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -70,7 +56,6 @@ class StorageScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add seven ellipses in a row with different colors, before the text
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
@@ -86,8 +71,6 @@ class StorageScreen extends StatelessWidget {
                     }),
                   ),
                   SizedBox(height: screenHeight * 0.03), // Space between ellipses and text
-
-                  // Existing Text
                   const Text(
                     'Storage Permission',
                     textAlign: TextAlign.center,
@@ -97,7 +80,6 @@ class StorageScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // New Text with padding
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.1,
@@ -116,25 +98,22 @@ class StorageScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Button for navigation
           Positioned(
-            bottom: screenHeight * 0.05, // Position button relative to screen height
-            left: screenWidth * 0.1, // Fixed left position
-            right: screenWidth * 0.1, // Fixed right position
+            bottom: screenHeight * 0.05,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
+                backgroundColor: Colors.blue,
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
               onPressed: () {
-                // Navigate to SplashScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const RecordAudioScreen()), // Replace with your desired screen
+                  MaterialPageRoute(builder: (context) => const RecordAudioScreen()),
                 );
               },
               child: const Text(

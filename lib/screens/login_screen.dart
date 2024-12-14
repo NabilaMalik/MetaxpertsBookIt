@@ -1,56 +1,44 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:order_booking_app/screens/signup_screen.dart';
 import '../components/under_part.dart';
 import '../constants.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/rounded_icon.dart';
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>(); // GlobalKey for form validation
-  bool isChecked = true; // To manage checkbox state
-  bool isPasswordVisible = false; // To manage password visibility
-
-  String? email; // Store email
-  String? password; // Store password
-
-  // Simulated backend user database
+  final _formKey = GlobalKey<FormState>();
+  bool isChecked = true;
+  bool isPasswordVisible = false;
+  String? email;
+  String? password;
   final List<String> _registeredUsers = ['test@example.com', 'user@example.com'];
-
   Future<bool> _checkIfUserExists(String email) async {
-    // Simulate backend API call with a delay
     await Future.delayed(const Duration(seconds: 1));
     return _registeredUsers.contains(email);
   }
-
   void _handleSignIn() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
-      // Check if the user exists
       bool userExists = await _checkIfUserExists(email!);
-
       if (!userExists) {
-        // Show error if the user doesn't exist
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Account does not exist. Please sign up first.'),
+          const SnackBar(
+            content: Text('Account does not exist. Please sign up first.'),
             backgroundColor: Colors.red,
           ),
         );
       } else {
-        // Perform login logic here
-        print('Login successful: Email: $email, Password: $password');
-        // Navigate to the main screen or show success message
+        if (kDebugMode) {
+          print('Login successful: Email: $email, Password: $password');
+        }
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -62,7 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Stack(
               children: [
-                // Blue background
                 Container(
                   height: 440,
                   width: double.infinity,
@@ -235,8 +222,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       MaterialPageRoute(builder: (context) => const SignUpScreen()));
                                 },
                               ),
-                              const SizedBox(height: 40),
-                              const SizedBox(height: 40),
+                              const SizedBox(height: 65),
+
                               iconButton(context),
                               const SizedBox(height: 40),
                             ],

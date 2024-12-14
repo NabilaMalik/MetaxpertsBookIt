@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/under_part.dart';
 import '../widgets/rounded_button.dart';
 import 'login_screen.dart';
-import 'new_screen.dart'; // Import the new screen
-
+import 'new_screen.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
   @override
@@ -19,7 +18,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _confirmPasswordController.dispose();
     super.dispose();
   }
-
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
@@ -28,7 +26,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     return null;
   }
-
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a password';
@@ -252,7 +249,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
   Widget _buildPasswordField({
     required String label,
     required TextEditingController controller,

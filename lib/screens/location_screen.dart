@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:order_booking_app/screens/contact_screen.dart';
+import 'package:order_booking_app/screens/shopvisit_screen.dart';
 
 
 class LocationScreen extends StatelessWidget {
@@ -21,51 +22,32 @@ class LocationScreen extends StatelessWidget {
       Colors.grey,
       Colors.grey,
     ];
-
     return Scaffold(
       body: Stack(
         children: [
-          // Blue background container
           Container(
-            color: Colors.blue, // Set the background color to blue
-            width: screenWidth, // Use full screen width
-            height: screenHeight, // Use full screen height
+            color: Colors.blue,
+            width: screenWidth,
+            height: screenHeight,
           ),
-
-          // Add Camera Icon at the center top
           Positioned(
-            top: screenHeight * 0.15, // Position the icon relative to screen height
+            top: screenHeight * 0.15,
             left: 0,
             right: 0,
             child: Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle, // Maintain circular shape
-                  //   boxShadow: [
-                  //     BoxShadow(
-                  //       color: Colors.black.withOpacity(0.3), // Shadow color with opacity
-                  //       blurRadius: 10, // Amount of blur
-                  //       spreadRadius: 2, // Spread of the shadow
-                  //       offset: Offset(0, 5), // Offset to create a bottom shadow
-                  //     ),
-                  //   ],
-                ),
-                child: Icon(
-                  Icons.location_on, // Use the camera icon
-                  size: screenWidth * 0.4, // Adjust size relative to screen width
-                  color: Colors.white, // Set the color of the icon to white
-                ),
+              child: Icon(
+                Icons.location_on, // Use the camera icon
+                size: screenWidth * 0.4, // Adjust size relative to screen width
+                color: Colors.white, // Set the color of the icon to white
               ),
             ),
           ),
-
-          // White container with top padding and border radius
           Positioned(
-            top: screenHeight * 0.42, // Position the white container relative to screen height
+            top: screenHeight * 0.42,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.69, // Set height relative to screen height
+              height: screenHeight * 0.69,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -80,7 +62,6 @@ class LocationScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add seven ellipses in a row with different colors, before the text
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
@@ -95,9 +76,7 @@ class LocationScreen extends StatelessWidget {
                       );
                     }),
                   ),
-                  SizedBox(height: screenHeight * 0.03), // Space between ellipses and text
-
-                  // Existing Text
+                  SizedBox(height: screenHeight * 0.03),
                   const Text(
                     'Location Permission',
                     textAlign: TextAlign.center,
@@ -107,7 +86,6 @@ class LocationScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // New Text with padding
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.1,
@@ -126,25 +104,45 @@ class LocationScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Button for navigation
           Positioned(
-            bottom: screenHeight * 0.05, // Position button relative to screen height
-            left: screenWidth * 0.1, // Fixed left position
-            right: screenWidth * 0.1, // Fixed right position
+            bottom: screenHeight * 0.15,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ShopvisitScreen(),
+                  ),
+                );
+              },
+
+              child: const Text(
+                "Go to New Screen",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: screenHeight * 0.05,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
+                backgroundColor: Colors.blue,
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
               onPressed: () {
-                // Navigate to SplashScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ContactScreen()), // Replace with your desired screen
+                  MaterialPageRoute(builder: (context) => const ContactScreen()),
                 );
               },
               child: const Text(

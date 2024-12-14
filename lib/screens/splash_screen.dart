@@ -10,7 +10,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navigate to LoginScreen after 4 seconds
     Timer(
       const Duration(seconds: 3),
           () {
@@ -21,7 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
       },
     );
   }
-
   @override
   Widget build(BuildContext context) {
     // Get screen dimensions
@@ -33,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           children: [
-            // App Logo
             Align(
               alignment: Alignment.center,
               child: Padding(
@@ -48,7 +45,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
             ),
-
             // Copyright Text
             Align(
               alignment: Alignment.bottomCenter,

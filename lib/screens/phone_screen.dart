@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:order_booking_app/screens/reconfirm_order_screen.dart';
 import 'package:order_booking_app/screens/storage_screen.dart';
 class PhoneScreen extends StatelessWidget {
   const PhoneScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    // Get screen size and orientation
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     List<Color> ellipseColors = [
@@ -16,41 +16,32 @@ class PhoneScreen extends StatelessWidget {
       Colors.grey,
       Colors.grey,
     ];
-
     return Scaffold(
       body: Stack(
         children: [
-          // Blue background container
           Container(
             color: Colors.blue, // Set the background color to blue
             width: screenWidth, // Use full screen width
             height: screenHeight, // Use full screen height
           ),
-
-          // Add Camera Icon at the center top
           Positioned(
             top: screenHeight * 0.15, // Position the icon relative to screen height
             left: 0,
             right: 0,
             child: Center(
-              child: Container(
-
-                child: Icon(
-                  Icons.phone, // Use the camera icon
-                  size: screenWidth * 0.5, // Adjust size relative to screen width
-                  color: Colors.white, // Set the color of the icon to white
-                ),
+              child: Icon(
+                Icons.phone, // Use the camera icon
+                size: screenWidth * 0.5, // Adjust size relative to screen width
+                color: Colors.white, // Set the color of the icon to white
               ),
             ),
           ),
-
-          // White container with top padding and border radius
           Positioned(
-            top: screenHeight * 0.42, // Position the white container relative to screen height
+            top: screenHeight * 0.42,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.65, // Set height relative to screen height
+              height: screenHeight * 0.65,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -65,7 +56,6 @@ class PhoneScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add seven ellipses in a row with different colors, before the text
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
@@ -80,9 +70,7 @@ class PhoneScreen extends StatelessWidget {
                       );
                     }),
                   ),
-                  SizedBox(height: screenHeight * 0.03), // Space between ellipses and text
-
-                  // Existing Text
+                  SizedBox(height: screenHeight * 0.03),
                   const Text(
                     'Phone Permission',
                     textAlign: TextAlign.center,
@@ -92,7 +80,6 @@ class PhoneScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // New Text with padding
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.1,
@@ -111,8 +98,29 @@ class PhoneScreen extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(
+            bottom: screenHeight * 0.15,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReconfirmOrderScreen(),
+                  ),
+                );
+              },
 
-          // Button for navigation
+              child: const Text(
+                "Go to New Screen",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
           Positioned(
             bottom: screenHeight * 0.05, // Position button relative to screen height
             left: screenWidth * 0.1, // Fixed left position
@@ -126,7 +134,6 @@ class PhoneScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // Navigate to SplashScreen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const StorageScreen()), // Replace with your desired screen

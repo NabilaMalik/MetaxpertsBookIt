@@ -5,7 +5,6 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen width and height for responsive design
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -30,11 +29,11 @@ class UserProfileScreen extends StatelessWidget {
                     ],
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: const [
+                        children: [
                           Icon(Icons.menu, color: Colors.white, size: 30),
                           SizedBox(width: 118),
                           Text(
@@ -48,7 +47,7 @@ class UserProfileScreen extends StatelessWidget {
                         ],
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Icon(Icons.search, color: Colors.white, size: 28),
                           SizedBox(width: 20),
                           Icon(Icons.notifications, color: Colors.white, size: 28),
@@ -67,12 +66,12 @@ class UserProfileScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         // Profile Details
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
 
                             Text(
                               "BOOKIT",
@@ -98,10 +97,10 @@ class UserProfileScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 155), // Add some space between image and text content
+                        SizedBox(width: 155), // Add some space between image and text content
 
                         // Profile Image
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 50,
                           backgroundImage: AssetImage('assets/images/download (1).png'), // Replace with your image path
                         ),
@@ -159,15 +158,15 @@ class UserProfileScreen extends StatelessWidget {
                             label: 'Booking Status',
                             width: screenWidth * 0.25, // Responsive width
                           ),
-                          Text("                                   ",
+                          const Text("                                   ",
                             style: TextStyle(fontSize: 12),),
                         ],
                       ),
                       const SizedBox(height: 27),
                       // Overview Text
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
-                        child: const Text(
+                        child: Text(
                           "Overview",
                           style: TextStyle(
                             fontSize: 35,
@@ -204,9 +203,9 @@ class UserProfileScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 10),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text("  Total",
                                   style: TextStyle(fontSize: 12),),
                                 Text("Total",
@@ -217,9 +216,9 @@ class UserProfileScreen extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),),
                               ],
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text("Bookings",
                                   style: TextStyle(fontSize: 12),),
                                 Text("Shops",
@@ -241,9 +240,9 @@ class UserProfileScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 10),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text("Monthly",
                                   style: TextStyle(fontSize: 12),),
                                 Text("Daily",
@@ -254,9 +253,9 @@ class UserProfileScreen extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),),
                               ],
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text("Attendance",
                                   style: TextStyle(fontSize: 12),),
                                 Text("Bookings",
@@ -268,7 +267,7 @@ class UserProfileScreen extends StatelessWidget {
 
                               ],
                             ),
-                            const SizedBox(height: 35),
+                            const SizedBox(height: 30),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -276,15 +275,15 @@ class UserProfileScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 10),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text("Total Order", style: TextStyle(fontSize: 12),),
                               ],
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text("Dispatched", style: TextStyle(fontSize: 12),),
                               ],
                             ),
