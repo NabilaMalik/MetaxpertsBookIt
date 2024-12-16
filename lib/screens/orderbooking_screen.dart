@@ -41,7 +41,7 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Shop Visit',
+            'Confirm Order',
             style: TextStyle(color: Colors.white, fontSize: 29),
           ),
           centerTitle: true,
