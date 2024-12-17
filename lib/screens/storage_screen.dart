@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:order_booking_app/screens/orderbooking_status_screen.dart';
 import 'package:order_booking_app/screens/record_audio_screen.dart';
 class StorageScreen extends StatelessWidget {
   const StorageScreen({super.key});
@@ -95,6 +96,29 @@ class StorageScreen extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: screenHeight * 0.15,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OrderbookingStatusScreen(),
+                  ),
+                );
+              },
+
+              child: const Text(
+                "Go to New Screen",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                ),
               ),
             ),
           ),

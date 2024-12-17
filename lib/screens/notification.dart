@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:order_booking_app/screens/login_screen.dart';
+import 'package:order_booking_app/screens/recoveryform_screen.dart';
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
   @override
@@ -102,6 +103,28 @@ class NotificationScreen extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: screenHeight * 0.15,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RecoveryformScreen(),
+                  ),
+                );
+              },
+              child: const Text(
+                "Go to New Screen",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                ),
               ),
             ),
           ),
