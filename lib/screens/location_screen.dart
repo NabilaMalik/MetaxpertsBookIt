@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:order_booking_app/screens/contact_screen.dart';
 import 'package:order_booking_app/screens/shopvisit_screen.dart';
-
-
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});
 

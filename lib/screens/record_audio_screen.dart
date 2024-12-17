@@ -16,8 +16,6 @@ class RecordAudioScreen extends StatelessWidget {
       Colors.grey,
       Colors.blue,
       Colors.grey,
-
-
     ];
 
     return Scaffold(
