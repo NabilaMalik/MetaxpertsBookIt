@@ -1,8 +1,8 @@
 
 import 'package:get/get.dart';
 
-import '../model/ShopVisitModel.dart';
-import '../repositories/ShopVisitRepository.dart';
+import '../model/shop_visit_model.dart';
+import '../repositories/shop_visit_repository.dart';
 
 class AddShopViewModel extends GetxController{
 

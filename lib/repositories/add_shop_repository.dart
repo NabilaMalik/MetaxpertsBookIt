@@ -1,5 +1,5 @@
 import '../database/Util.dart';
-import '../model/AddShopModel.dart';
+import '../model/add_shop_model.dart';
 import '../database/DBHelper.dart';
 class AddShopRepository{
 

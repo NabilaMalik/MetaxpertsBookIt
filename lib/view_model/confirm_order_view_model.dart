@@ -1,8 +1,8 @@
 
 import 'package:get/get.dart';
 
-import '../model/ConfirmOrderModel.dart';
-import '../repositories/confirmOrderRepository.dart';
+import '../model/confirm_order_model.dart';
+import '../repositories/confirm_order_repository.dart';
 class ConfirmOrderViewModel extends GetxController{
 
   var allConfirmOrder = <ConfirmOrderModel>[].obs;

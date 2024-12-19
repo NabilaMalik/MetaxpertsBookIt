@@ -1,4 +1,4 @@
-import '../model/ShopVisitModel.dart';
+import '../model/shop_visit_model.dart';
 import '../database/DBHelper.dart';
 import '../database/Util.dart';
 
