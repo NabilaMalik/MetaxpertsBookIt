@@ -8,7 +8,7 @@ class ShopVisitRepository{
 
   Future<List<ShopVisitModel>> getShopVisit() async{
     var dbClient = await dbHelper.db;
-    List<Map> maps = await dbClient.query(tableName,columns: ['id','shopName','city','shopAddress','ownerName','ownerCNIC','phoneNumber','alterPhoneNumber' ]);
+    List<Map> maps = await dbClient.query(tableName,columns: ['id','brand','shopName','shopAddress','ShopOwner','bookerName','photoPath','feedback','shopId' ]);
     List<ShopVisitModel> shopvisit = [];
     for(int i = 0; i<maps.length; i++)
     {
