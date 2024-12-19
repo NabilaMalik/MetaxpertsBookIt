@@ -1,6 +1,6 @@
 import '../database/Util.dart';
 import '../model/add_shop_model.dart';
-import '../database/DBHelper.dart';
+import '../database/dp_helper.dart';
 class AddShopRepository{
 
   DBHelper dbHelper = DBHelper();
