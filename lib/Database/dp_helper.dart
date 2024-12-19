@@ -29,9 +29,12 @@ class DBHelper{
     //ShopVisit Database
     db.execute("CREATE TABLE shopvisit(id INTEGER PRIMARY KEY, brand TEXT, shopName TEXT, shopAddress TEXT, ShopOwner TEXT, bookerName TEXT,photoPath TEXT, feedback TEXT, shopId TEXT)");
     //confirm order.
-    db.execute("CREATE TABLE confirmorder(id INTEGER PRIMARY KEY, shopName TEXT, ownerName TEXT , phoneNumber TEXT, brand TEXT, total TEXT,credit TEXT, requireDelivery TEXT)");
+    db.execute("CREATE TABLE confirmorder(id INTEGER PRIMARY KEY, shopName TEXT, ownerName TEXT , phoneNumber TEXT, brand TEXT, total REAL,credit TEXT, requireDelivery TEXT)");
     //Reconfirm Order
-    db.execute("CREATE TABLE confirmorder(id INTEGER PRIMARY KEY, orderId TEXT, customerName TEXT, phoneNumber TEXT, description TEXT, qty TEXT,amount TEXT, total TEXT, creditLimit TEXT, required TEXT)");
+    db.execute("CREATE TABLE confirmorder(id INTEGER PRIMARY KEY, orderId TEXT, customerName TEXT, phoneNumber TEXT, description TEXT, qty TEXT,amount TEXT, total REAL, creditLimit TEXT, required TEXT)");
+    //return form
+    db.execute("""CREATE TABLE returnform(id INTEGER PRIMARY KEY,selectShop TEXT,item TEXT,qty INTEGER,reason TEXT,FOREIGN KEY (selectShop) REFERENCES returnform (id) )""");
   }
 
 }
+

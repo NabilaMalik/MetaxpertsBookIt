@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../model/re_confirm_order_model.dart';
 import '../repositories/re_confirm_order_repository.dart';
 class ReConfirmOrderViewModel extends GetxController{

@@ -6,7 +6,7 @@ class ReConfirmOrderModel{
   String? description;
   String? qty;
   String? amount;
-  String? total;
+  int? total;
   String? creditLimit;
   String? required;
 

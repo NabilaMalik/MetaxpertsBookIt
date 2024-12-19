@@ -5,7 +5,7 @@ class ConfirmOrderModel{
   String? ownerName;
   String? phoneNumber;
   String? brand;
-  String? total;
+  int? total;
   String? credit;
   String? requireDelivery;
 
