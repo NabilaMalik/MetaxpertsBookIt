@@ -1,6 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 class Products extends GetxController {
   // final productsViewModel = ProductsViewModel();
   List<DataRow> rows = <DataRow>[].obs;  // Observable list of DataRow

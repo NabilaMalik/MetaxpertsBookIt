@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/under_part.dart';
 import '../widgets/rounded_button.dart';
-import 'login_screen.dart';
-import 'new_screen.dart';
-
 class AddshopScreen extends StatefulWidget {
   const AddshopScreen({super.key});
 
@@ -71,7 +67,6 @@ class _AddshopScreenState extends State<AddshopScreen> {
   void dispose() {
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

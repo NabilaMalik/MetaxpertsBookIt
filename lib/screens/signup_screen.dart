@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/under_part.dart';
 import '../widgets/rounded_button.dart';
 import 'login_screen.dart';
-import 'new_screen.dart';
+import 'home.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
   @override

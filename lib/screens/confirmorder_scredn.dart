@@ -62,7 +62,7 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
                 _buildDataTable(),
                 const SizedBox(height: 20),
                 _buildTextField(
-                  label: "Tota",
+                  label: "Total",
                   icon: Icons.add_business,
                   validator: (value) => null,
                 ),
