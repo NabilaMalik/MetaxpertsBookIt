@@ -21,7 +21,7 @@ class UserProfileScreen extends StatelessWidget {
                     color: Colors.blue,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.blue[900]!.withOpacity(0.8), // Dark blue shadow
+                        color: Colors.blue, // Dark blue shadow
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: const Offset(0, 4),
@@ -183,7 +183,7 @@ class UserProfileScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(29),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.blue.withOpacity(0.8),
+                              color: Colors.blue,
                               spreadRadius: 3,
                               blurRadius: 9,
                               offset: const Offset(0, 3), // Shadow position
@@ -311,7 +311,7 @@ class UserProfileScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(35),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey,
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 2), // Shadow position
@@ -345,7 +345,7 @@ class UserProfileScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue.withOpacity(0.8),
+            color: Colors.blue,
             spreadRadius: 2,
             blurRadius: 9,
           ),
