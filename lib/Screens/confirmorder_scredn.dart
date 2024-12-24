@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:order_booking_app/screens/Components/products_controller.dart';
+import '../Components/products_controller.dart';
 import '../widgets/rounded_button.dart';
 
 class OrderbookingScreen extends StatefulWidget {

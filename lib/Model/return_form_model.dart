@@ -4,6 +4,7 @@ class ReturnFormModel{
   String? item;
   String? qty;
   String? reason;
+
   ReturnFormModel({
     this.id,
     this.selectShop,
@@ -11,6 +12,7 @@ class ReturnFormModel{
     this.qty,
     this.reason,
   });
+
   factory ReturnFormModel.fromMap(Map<dynamic,dynamic> json){
     return ReturnFormModel(
       id: json['id'],
@@ -20,6 +22,7 @@ class ReturnFormModel{
       reason: json['reason'],
     );
   }
+
   Map<String, dynamic> toMap(){
     return{
       'id':id,

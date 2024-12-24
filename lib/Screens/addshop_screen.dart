@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../viewmodel/add_shop_view_model.dart';
+import 'package:order_booking_app/model/add_shop_model.dart'; // Consistent import
 import '../widgets/rounded_button.dart';
+
 class AddshopScreen extends StatefulWidget {
   const AddshopScreen({super.key});
 
@@ -8,6 +12,15 @@ class AddshopScreen extends StatefulWidget {
 }
 
 class _AddshopScreenState extends State<AddshopScreen> {
+  final addShopViewModel = Get.put(AddShopViewModel());
+  final shopNameController = TextEditingController();
+  final cityController = TextEditingController();
+  final shopAddressController = TextEditingController();
+  final ownerNameController = TextEditingController();
+  final ownerCNICController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final alterPhoneNumberController = TextEditingController();
+  int? addShopId;
   final _formKey = GlobalKey<FormState>();
   String? selectedCity;
   List<String> cities = [
@@ -61,12 +74,20 @@ class _AddshopScreenState extends State<AddshopScreen> {
     'Charade'
   ];
 
-  bool _isSwitchOn = false; // State for the switch
+  bool _isSwitchOn = false;
 
   @override
   void dispose() {
+    shopNameController.dispose();
+    cityController.dispose();
+    shopAddressController.dispose();
+    ownerNameController.dispose();
+    ownerCNICController.dispose();
+    phoneNumberController.dispose();
+    alterPhoneNumberController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -75,10 +96,10 @@ class _AddshopScreenState extends State<AddshopScreen> {
         appBar: AppBar(
           title: const Text(
             'Add Shop',
-            style: TextStyle(color: Colors.white, fontSize: 29), // Set text color here
+            style: TextStyle(color: Colors.white, fontSize: 29),
           ),
-          centerTitle: true, // Centers the title
-          backgroundColor: Colors.blue, // Set background color to white
+          centerTitle: true,
+          backgroundColor: Colors.blue,
         ),
         body: SizedBox(
           width: size.width,
@@ -87,7 +108,6 @@ class _AddshopScreenState extends State<AddshopScreen> {
             child: Stack(
               children: [
                 Container(
-                  height: 780,
                   width: double.infinity,
                   color: Colors.blue,
                 ),
@@ -109,6 +129,7 @@ class _AddshopScreenState extends State<AddshopScreen> {
                               _buildTextField(
                                 label: "Shop Name",
                                 icon: Icons.home_work_outlined,
+                                controller: shopNameController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter the shop name';
@@ -136,9 +157,10 @@ class _AddshopScreenState extends State<AddshopScreen> {
                               _buildTextField(
                                 label: "Shop Address",
                                 icon: Icons.location_on,
+                                controller: shopAddressController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter the shop Address';
+                                    return 'Please enter the shop address';
                                   }
                                   return null;
                                 },
@@ -146,9 +168,10 @@ class _AddshopScreenState extends State<AddshopScreen> {
                               _buildTextField(
                                 label: "Owner Name",
                                 icon: Icons.person_outlined,
+                                controller: ownerNameController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter the name';
+                                    return 'Please enter the owner\'s name';
                                   }
                                   return null;
                                 },
@@ -156,6 +179,7 @@ class _AddshopScreenState extends State<AddshopScreen> {
                               _buildTextField(
                                 label: "Owner CNIC",
                                 icon: Icons.person_outlined,
+                                controller: ownerCNICController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter the CNIC';
@@ -167,12 +191,12 @@ class _AddshopScreenState extends State<AddshopScreen> {
                                   }
                                   return null;
                                 },
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.number,
                               ),
-
                               _buildTextField(
                                 label: "Phone Number",
                                 icon: Icons.phone,
+                                controller: phoneNumberController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter the phone number';
@@ -184,6 +208,7 @@ class _AddshopScreenState extends State<AddshopScreen> {
                               _buildTextField(
                                 label: "Alternative Phone Number",
                                 icon: Icons.phone,
+                                controller: alterPhoneNumberController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter the phone number';
@@ -202,29 +227,95 @@ class _AddshopScreenState extends State<AddshopScreen> {
                                       setState(() {
                                         _isSwitchOn = value;
                                       });
-                                      print("Switch is now: ${_isSwitchOn ? "ON" : "OFF"}");
                                     },
                                     activeColor: Colors.blue,
                                   ),
                                   const Text(
-                                    "GPS Enabled",
-                                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                                    "  GPS Enabled",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 29),
-                              RoundedButton(
-                                text: 'Add',
-
-                                press: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    print("Registration successful");
-                                    print("Notifications: ${_isSwitchOn ? "Enabled" : "Disabled"}");
-                                  }
-                                },
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        addShopViewModel.addAddShop(AddShopModel(
+                                          id: null,
+                                          shopName: shopNameController.text,
+                                          city: selectedCity,
+                                          shopAddress: shopAddressController.text,
+                                          ownerName: ownerNameController.text,
+                                          ownerCNIC: ownerCNICController.text,
+                                          phoneNumber: phoneNumberController.text,
+                                          alterPhoneNumber: alterPhoneNumberController.text,
+                                        ));
+                                        shopNameController.clear();
+                                        cityController.clear();
+                                        shopAddressController.clear();
+                                        ownerNameController.clear();
+                                        ownerCNICController.clear();
+                                        phoneNumberController.clear();
+                                        alterPhoneNumberController.clear();
+                                      }
+                                    },
+                                    child: const Text("Save"),
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Colors.blue, // Button color
+                                      minimumSize: Size(150, 50), // Set width and height
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12), // Optional rounded corners
+                                      ),
+                                      textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 28),
+                                ],
                               ),
-
-                              const SizedBox(height: 110),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: addShopViewModel.allAddShop.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        addShopId =
+                                            addShopViewModel.allAddShop[index].id;
+                                        shopNameController.text = addShopViewModel.allAddShop[index].shopName!;
+                                        cityController.text = addShopViewModel.allAddShop[index].city!;
+                                        shopAddressController.text = addShopViewModel.allAddShop[index].shopAddress!;
+                                        ownerNameController.text = addShopViewModel.allAddShop[index].ownerName!;
+                                        ownerCNICController.text = addShopViewModel.allAddShop[index].ownerCNIC!;
+                                        phoneNumberController.text = addShopViewModel.allAddShop[index].phoneNumber!;
+                                        alterPhoneNumberController.text = addShopViewModel.allAddShop[index].alterPhoneNumber!;
+                                      });
+                                    },
+                                    child: Card(
+                                      child: ListTile(
+                                        title: Text(
+                                            '${addShopViewModel.allAddShop[index].shopName} - ${addShopViewModel.allAddShop[index].city}'),
+                                        trailing: IconButton(
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                          onPressed: () {
+                                            addShopViewModel.deleteAddShop(addShopViewModel.allAddShop[index].id!);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
                             ],
                           ),
                         ),
@@ -243,12 +334,14 @@ class _AddshopScreenState extends State<AddshopScreen> {
   Widget _buildTextField({
     required String label,
     required IconData icon,
-    required String? Function(String?) validator,
     TextInputType keyboardType = TextInputType.text,
+    required String? Function(String?) validator,
+    TextEditingController? controller,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextFormField(
+        controller: controller,
         style: const TextStyle(fontSize: 20),
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.blue),

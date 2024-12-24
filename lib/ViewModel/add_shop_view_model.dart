@@ -1,6 +1,5 @@
 
 import 'package:get/get.dart';
-
 import '../model/add_shop_model.dart';
 import '../repositories/add_shop_repository.dart';
 

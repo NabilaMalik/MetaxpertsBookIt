@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:order_booking_app/screens/Components/products_controller.dart';
+import '../Components/products_controller.dart';
 import '../components/under_part.dart';
 import '../widgets/rounded_button.dart';
 
