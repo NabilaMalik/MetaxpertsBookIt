@@ -1,20 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/contact_screen.dart';
-import 'package:order_booking_app/screens/shopvisit_screen.dart';
-class LocationScreen extends StatelessWidget {
-  const LocationScreen({super.key});
 
+import 'package:flutter/material.dart';
+import 'package:order_booking_app/Screens/permission_screens/phone_screen.dart';
+
+import '../home_screen/confirmorder_scredn.dart';
+class ContactScreen extends StatelessWidget {
+  const ContactScreen({super.key});
   @override
   Widget build(BuildContext context) {
     // Get screen size and orientation
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
-    // Define a list of colors for the ellipses
     List<Color> ellipseColors = [
       Colors.grey,
-      Colors.blue,
       Colors.grey,
+      Colors.blue,
       Colors.grey,
       Colors.grey,
       Colors.grey,
@@ -23,29 +22,35 @@ class LocationScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          // Green background container
           Container(
-            color: Colors.blue,
-            width: screenWidth,
-            height: screenHeight,
+            color: Colors.blue, // Set the background color to green
+            width: screenWidth, // Use full screen width
+            height: screenHeight, // Use full screen height
           ),
           Positioned(
             top: screenHeight * 0.15,
             left: 0,
             right: 0,
             child: Center(
-              child: Icon(
-                Icons.location_on, // Use the camera icon
-                size: screenWidth * 0.4, // Adjust size relative to screen width
-                color: Colors.white, // Set the color of the icon to white
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.contact_page_rounded,
+                  size: screenWidth * 0.4,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
           Positioned(
-            top: screenHeight * 0.42,
+            top: screenHeight * 0.43,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.69,
+              height: screenHeight * 0.59,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -76,7 +81,7 @@ class LocationScreen extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.03),
                   const Text(
-                    'Location Permission',
+                    'Contact Permission',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -90,7 +95,7 @@ class LocationScreen extends StatelessWidget {
                       vertical: screenHeight * 0.03,
                     ),
                     child: const Text(
-                      'We would like to access and store your location, only when you are logged into the app. Background Location access is only to measure the distance traveled, to fill the locations in the forms, these data are only stored on the device storage and our server and can be deleted at any time.',
+                      'We would like to access contact list to read, send and upload it to BOOKIT to improve business solutions.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -111,7 +116,7 @@ class LocationScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ShopvisitScreen(),
+                    builder: (context) => const OrderbookingScreen(),
                   ),
                 );
               },
@@ -126,28 +131,29 @@ class LocationScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0.05,
+            bottom: screenHeight * 0.05, // Position button relative to screen height
             left: screenWidth * 0.1,
             right: screenWidth * 0.1,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.blue, // Button color
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
               onPressed: () {
+                // Navigate to SplashScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ContactScreen()),
+                  MaterialPageRoute(builder: (context) => const PhoneScreen()), // Replace with your desired screen
                 );
               },
               child: const Text(
                 'ALLOW',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),

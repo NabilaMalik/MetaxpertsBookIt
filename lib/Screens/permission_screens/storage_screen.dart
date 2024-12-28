@@ -1,57 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/notification.dart';
-import 'package:order_booking_app/screens/returnform_screen.dart';
-class RecordAudioScreen extends StatelessWidget {
-  const RecordAudioScreen({super.key});
+import 'package:order_booking_app/Screens/permission_screens/record_audio_screen.dart';
+
+import '../home_screen/orderbooking_status_screen.dart';
+class StorageScreen extends StatelessWidget {
+  const StorageScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    // Get screen size and orientation
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    // Define a list of colors for the ellipses
     List<Color> ellipseColors = [
-      Colors.grey,
       Colors.grey,
       Colors.grey,
       Colors.grey,
       Colors.grey,
       Colors.blue,
       Colors.grey,
+      Colors.grey,
     ];
-
     return Scaffold(
       body: Stack(
         children: [
-          // Green background container
+          // Blue background container
           Container(
-            color: Colors.blue, // Set the background color to green
+            color: Colors.blue, // Set the background color to blue
             width: screenWidth, // Use full screen width
-            height: screenHeight, // Use full screen height
+            height: screenHeight,
           ),
-
-          // Add Location Icon at the center top
           Positioned(
-            top: screenHeight * 0.15, // Position the icon relative to screen height
+            top: screenHeight * 0.15,
             left: 0,
             right: 0,
             child: Center(
-              child: Container(
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle, // Maintain circular shape
-                ),
-                child: Icon(
-                  Icons.mic, // Use the location icon
-                  size: screenWidth * 0.5, // Adjust size relative to screen width
-                  color: Colors.white, // Set the color of the icon to white
-                ),
+              child: Icon(
+                Icons.storage_outlined,
+                size: screenWidth * 0.5,
+                color: Colors.white,
               ),
             ),
-          ),
-          Positioned(
-            top: screenHeight * 0.45,
+          ), Positioned(
+            top: screenHeight * 0.42,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.59,
+              height: screenHeight * 0.64,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -80,9 +72,9 @@ class RecordAudioScreen extends StatelessWidget {
                       );
                     }),
                   ),
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(height: screenHeight * 0.03), // Space between ellipses and text
                   const Text(
-                    'Mic Permission',
+                    'Storage Permission',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -96,7 +88,7 @@ class RecordAudioScreen extends StatelessWidget {
                       vertical: screenHeight * 0.03,
                     ),
                     child: const Text(
-                      'We would like to record audio to store process instructions in application to improve user experience.',
+                      'We need permission to store images files or upload documents/images. We respect your privacy and we will make sure to not upload ant of your personal data.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -117,10 +109,11 @@ class RecordAudioScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ReturnformScreen(),
+                    builder: (context) => const OrderbookingStatusScreen(),
                   ),
                 );
               },
+
               child: const Text(
                 "Go to New Screen",
                 style: TextStyle(
@@ -131,22 +124,21 @@ class RecordAudioScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0.05, // Position button relative to screen height
-            left: screenWidth * 0.1, // Fixed left position
-            right: screenWidth * 0.1, // Fixed right position
+            bottom: screenHeight * 0.05,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
+                backgroundColor: Colors.blue,
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
               onPressed: () {
-                // Navigate to SplashScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  const NotificationScreen()), // Replace with your desired screen
+                  MaterialPageRoute(builder: (context) => const RecordAudioScreen()),
                 );
               },
               child: const Text(

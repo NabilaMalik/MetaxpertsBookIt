@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../Components/products_controller.dart';
-import '../components/under_part.dart';
-import '../widgets/rounded_button.dart';
+import '../../Components/products_controller.dart';
+import '../../ViewModel/shop_visit_view_model.dart';
+import '../../model/shop_visit_model.dart';
+import '../../widgets/rounded_button.dart';
 
 class ShopvisitScreen extends StatefulWidget {
   const ShopvisitScreen({super.key});
@@ -13,6 +14,17 @@ class ShopvisitScreen extends StatefulWidget {
 }
 
 class _ShopvisitScreenState extends State<ShopvisitScreen> {
+  final shopvisitViewModel = Get.put(ShopVisitViewModel());
+  final brandController = TextEditingController();
+  final shopNameController = TextEditingController();
+  final shopAddressController = TextEditingController();
+  final shopOwnerController = TextEditingController();
+  final bookerNameController = TextEditingController();
+  final photoPathController = TextEditingController();
+  final feedbackController = TextEditingController();
+
+  int? shopvisitId;
+
   final _formKey = GlobalKey<FormState>();
   String? selectedBrand;
   String? selectedShop;
@@ -58,6 +70,18 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
     setState(() {
       _selectedImage = image;
     });
+  }
+
+  @override
+  void dispose() {
+    brandController.dispose();
+    shopNameController.dispose();
+    shopAddressController.dispose();
+    shopOwnerController.dispose();
+    bookerNameController.dispose();
+    photoPathController.dispose();
+    feedbackController.dispose();
+    super.dispose();
   }
 
   @override
@@ -338,6 +362,80 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                           if (_formKey.currentState!.validate()) {
                             print("No Order Selected");
                           }
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                shopvisitViewModel.addShopVisit(ShopVisitModel(
+                                  id: shopvisitId,
+                                  brand: selectedBrand,
+                                  shopName: selectedShop,
+                                  shopAddress: shopAddressController.text,
+                                  shopOwner: shopOwnerController.text,
+                                  bookerName: bookerNameController.text,
+                                  photoPath: photoPathController.text,
+                                  feedback: feedbackController.text,
+
+                                ));
+                                brandController.clear();
+                                shopNameController.clear();
+                                shopAddressController.clear();
+                                shopOwnerController.clear();
+                                bookerNameController.clear();
+                                photoPathController.clear();
+                                feedbackController.clear();
+                              }
+                            },
+                            child: const Text("Save"),
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.blue, // Button color
+                              minimumSize: Size(150, 50), // Set width and height
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12), // Optional rounded corners
+                              ),
+                              textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(width: 28),
+                        ],
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: shopvisitViewModel.allShopVisit.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                shopvisitId = shopvisitViewModel.allShopVisit[index].id;
+                                brandController.text = shopvisitViewModel.allShopVisit[index].brand!;
+                                shopNameController.text = shopvisitViewModel.allShopVisit[index].shopName!;
+                                shopAddressController.text = shopvisitViewModel.allShopVisit[index].shopAddress!;
+                                shopOwnerController.text = shopvisitViewModel.allShopVisit[index].shopOwner!;
+                                bookerNameController.text = shopvisitViewModel.allShopVisit[index].bookerName!;
+                                photoPathController.text = shopvisitViewModel.allShopVisit[index].photoPath!;
+                              });
+                            },
+                            child: Card(
+                              child: ListTile(
+                                title: Text(
+                                    '${shopvisitViewModel.allShopVisit[index].brand} - ${shopvisitViewModel.allShopVisit[index].shopName} - ${shopvisitViewModel.allShopVisit[index].shopAddress} - ${shopvisitViewModel.allShopVisit[index].shopOwner} - ${shopvisitViewModel.allShopVisit[index].bookerName} - ${shopvisitViewModel.allShopVisit[index].photoPath}'),
+                                trailing: IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    shopvisitViewModel.deleteShopVisit(shopvisitViewModel.allShopVisit[index].id!);
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
                         },
                       ),
                       const SizedBox(height: 50),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/camera_screen.dart';
+
+import 'camera_screen.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   @override

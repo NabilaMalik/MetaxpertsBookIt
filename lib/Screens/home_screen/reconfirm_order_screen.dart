@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../ViewModel/re_confirm_order_view_model.dart';
+import '../../model/re_confirm_order_model.dart';
 class ReconfirmOrderScreen extends StatefulWidget {
   const ReconfirmOrderScreen({super.key});
   @override
   _ReconfirmOrderScreenState createState() => _ReconfirmOrderScreenState();
 }
 class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
+  final reconfirmorderViewModel = Get.put(ReConfirmOrderViewModel());
+  final orderIdController = TextEditingController();
+  final customerNameController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final qtyController = TextEditingController();
+  final amountController = TextEditingController();
+  final totalController = TextEditingController();
+  final creditLimitController = TextEditingController();
+  final requiredController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
   // A helper method to build TextField widgets with custom decoration
   Widget _buildTextField({
     required String label,
@@ -29,6 +44,19 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    orderIdController.dispose();
+    customerNameController.dispose();
+    phoneNumberController.dispose();
+    descriptionController.dispose();
+    qtyController.dispose();
+    amountController.dispose();
+    totalController.dispose();
+    creditLimitController.dispose();
+    requiredController.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -220,27 +248,52 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.snackbar("Action", "Button Pressed!",
-                          snackPosition: SnackPosition.BOTTOM);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20), // Border radius
+
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          reconfirmorderViewModel.addReConfirmOrder(ReConfirmOrderModel(
+                            id: null,
+                            orderId: orderIdController.text,
+                            customerName: customerNameController.text,
+                            phoneNumber: phoneNumberController.text,
+                            description: descriptionController.text,
+                            qty: qtyController.text,
+                            amount: amountController.text,
+                            total: totalController.text,
+                            creditLimit: creditLimitController.text,
+                            required: requiredController.text,
+                          ));
+                          orderIdController.clear();
+                          customerNameController.clear();
+                          phoneNumberController.clear();
+                          descriptionController.clear();
+                          qtyController.clear();
+                          phoneNumberController.clear();
+                          amountController.clear();
+                          totalController.clear();
+                          creditLimitController.clear();
+                          requiredController.clear();
+                        }
+                      },
+                      child: const Text("ReConfirm"),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.blue, // Button color
+                        minimumSize: Size(150, 50), // Set width and height
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12), // Optional rounded corners
+                        ),
+                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    child: const Text(
-                      'Re Confirm',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
+                    const SizedBox(width: 28),
+                  ],
                 ),
-                const SizedBox(height: 20),
                 // Right-Aligned "Next" Button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

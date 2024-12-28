@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class ReConfirmOrderModel{
   int? id;
   String? orderId;
@@ -6,7 +8,7 @@ class ReConfirmOrderModel{
   String? description;
   String? qty;
   String? amount;
-  int? total;
+  String? total;
   String? creditLimit;
   String? required;
 

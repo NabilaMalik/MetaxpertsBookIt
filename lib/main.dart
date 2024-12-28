@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/splash_screen.dart';
+
+import 'Screens/permission_screens/splash_screen.dart';
+
 
 void main() {
   runApp(const MyApp());

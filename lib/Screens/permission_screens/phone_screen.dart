@@ -1,19 +1,18 @@
-
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/confirmorder_scredn.dart';
-import 'package:order_booking_app/screens/phone_screen.dart';
-class ContactScreen extends StatelessWidget {
-  const ContactScreen({super.key});
+import 'package:order_booking_app/Screens/permission_screens/storage_screen.dart';
+
+import '../home_screen/reconfirm_order_screen.dart';
+class PhoneScreen extends StatelessWidget {
+  const PhoneScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    // Get screen size and orientation
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     List<Color> ellipseColors = [
       Colors.grey,
       Colors.grey,
-      Colors.blue,
       Colors.grey,
+      Colors.blue,
       Colors.grey,
       Colors.grey,
       Colors.grey,
@@ -21,35 +20,29 @@ class ContactScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Green background container
           Container(
-            color: Colors.blue, // Set the background color to green
+            color: Colors.blue, // Set the background color to blue
             width: screenWidth, // Use full screen width
             height: screenHeight, // Use full screen height
           ),
           Positioned(
-            top: screenHeight * 0.15,
+            top: screenHeight * 0.15, // Position the icon relative to screen height
             left: 0,
             right: 0,
             child: Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.contact_page_rounded,
-                  size: screenWidth * 0.4,
-                  color: Colors.white,
-                ),
+              child: Icon(
+                Icons.phone, // Use the camera icon
+                size: screenWidth * 0.5, // Adjust size relative to screen width
+                color: Colors.white, // Set the color of the icon to white
               ),
             ),
           ),
           Positioned(
-            top: screenHeight * 0.43,
+            top: screenHeight * 0.42,
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.59,
+              height: screenHeight * 0.65,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -80,7 +73,7 @@ class ContactScreen extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.03),
                   const Text(
-                    'Contact Permission',
+                    'Phone Permission',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -94,7 +87,7 @@ class ContactScreen extends StatelessWidget {
                       vertical: screenHeight * 0.03,
                     ),
                     child: const Text(
-                      'We would like to access contact list to read, send and upload it to BOOKIT to improve business solutions.',
+                      'We need permission to detect incoming/Outgoing/Missed calls, to enable intelligent status updation. We respect your privacy and we will make sure to not upload any of your personal contacts.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -115,7 +108,7 @@ class ContactScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const OrderbookingScreen(),
+                    builder: (context) => const ReconfirmOrderScreen(),
                   ),
                 );
               },
@@ -131,8 +124,8 @@ class ContactScreen extends StatelessWidget {
           ),
           Positioned(
             bottom: screenHeight * 0.05, // Position button relative to screen height
-            left: screenWidth * 0.1,
-            right: screenWidth * 0.1,
+            left: screenWidth * 0.1, // Fixed left position
+            right: screenWidth * 0.1, // Fixed right position
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue, // Button color
@@ -142,10 +135,9 @@ class ContactScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // Navigate to SplashScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PhoneScreen()), // Replace with your desired screen
+                  MaterialPageRoute(builder: (context) => const StorageScreen()), // Replace with your desired screen
                 );
               },
               child: const Text(

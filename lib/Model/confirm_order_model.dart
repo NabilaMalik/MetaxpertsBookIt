@@ -1,13 +1,12 @@
 class ConfirmOrderModel{
-
   int? id;
   String? shopName;
   String? ownerName;
   String? phoneNumber;
   String? brand;
-  int? total;
-  String? credit;
-  String? requireDelivery;
+  String? total;
+  String? creditLimit;
+  String? requiredDelivery;
 
   ConfirmOrderModel({
     this.id,
@@ -16,11 +15,9 @@ class ConfirmOrderModel{
     this.phoneNumber,
     this.brand,
     this.total,
-    this.credit,
-    this.requireDelivery,
-
+    this.creditLimit,
+    this.requiredDelivery,
   });
-
   factory ConfirmOrderModel.fromMap(Map<dynamic,dynamic> json){
     return ConfirmOrderModel(
       id: json['id'],
@@ -29,8 +26,8 @@ class ConfirmOrderModel{
       phoneNumber: json['phoneNumber'],
       brand:json['brand'],
       total:json['total'],
-      credit:json['credit'],
-      requireDelivery:json['requireDelivery'],
+      creditLimit:json['creditLimit'],
+      requiredDelivery:json['requiredDelivery'],
     );
   }
 
@@ -42,8 +39,8 @@ class ConfirmOrderModel{
       'phoneNumber':phoneNumber,
       'brand':brand,
       'total':total,
-      'credit':credit,
-      'requireDelivery':requireDelivery,
+      'creditLimit':creditLimit,
+      'requiredDelivery':requiredDelivery,
     };
   }
 

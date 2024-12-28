@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/reconfirm_order_screen.dart';
-import 'package:order_booking_app/screens/storage_screen.dart';
-class PhoneScreen extends StatelessWidget {
-  const PhoneScreen({super.key});
+
+import '../home_screen/shopvisit_screen.dart';
+import 'contact_screen.dart';
+class LocationScreen extends StatelessWidget {
+  const LocationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    // Get screen size and orientation
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+
+    // Define a list of colors for the ellipses
     List<Color> ellipseColors = [
       Colors.grey,
-      Colors.grey,
-      Colors.grey,
       Colors.blue,
+      Colors.grey,
+      Colors.grey,
       Colors.grey,
       Colors.grey,
       Colors.grey,
@@ -20,18 +25,18 @@ class PhoneScreen extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            color: Colors.blue, // Set the background color to blue
-            width: screenWidth, // Use full screen width
-            height: screenHeight, // Use full screen height
+            color: Colors.blue,
+            width: screenWidth,
+            height: screenHeight,
           ),
           Positioned(
-            top: screenHeight * 0.15, // Position the icon relative to screen height
+            top: screenHeight * 0.15,
             left: 0,
             right: 0,
             child: Center(
               child: Icon(
-                Icons.phone, // Use the camera icon
-                size: screenWidth * 0.5, // Adjust size relative to screen width
+                Icons.location_on, // Use the camera icon
+                size: screenWidth * 0.4, // Adjust size relative to screen width
                 color: Colors.white, // Set the color of the icon to white
               ),
             ),
@@ -41,7 +46,7 @@ class PhoneScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: screenHeight * 0.65,
+              height: screenHeight * 0.69,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -72,7 +77,7 @@ class PhoneScreen extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.03),
                   const Text(
-                    'Phone Permission',
+                    'Location Permission',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -86,7 +91,7 @@ class PhoneScreen extends StatelessWidget {
                       vertical: screenHeight * 0.03,
                     ),
                     child: const Text(
-                      'We need permission to detect incoming/Outgoing/Missed calls, to enable intelligent status updation. We respect your privacy and we will make sure to not upload any of your personal contacts.',
+                      'We would like to access and store your location, only when you are logged into the app. Background Location access is only to measure the distance traveled, to fill the locations in the forms, these data are only stored on the device storage and our server and can be deleted at any time.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -107,7 +112,7 @@ class PhoneScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ReconfirmOrderScreen(),
+                    builder: (context) => const ShopvisitScreen(),
                   ),
                 );
               },
@@ -122,12 +127,12 @@ class PhoneScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0.05, // Position button relative to screen height
-            left: screenWidth * 0.1, // Fixed left position
-            right: screenWidth * 0.1, // Fixed right position
+            bottom: screenHeight * 0.05,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
+                backgroundColor: Colors.blue,
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -136,14 +141,14 @@ class PhoneScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const StorageScreen()), // Replace with your desired screen
+                  MaterialPageRoute(builder: (context) => const ContactScreen()),
                 );
               },
               child: const Text(
                 'ALLOW',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),

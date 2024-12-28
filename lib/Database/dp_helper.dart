@@ -1,12 +1,15 @@
+import 'package:order_booking_app/Database/Util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart'  show join;
 import 'package:sqflite/sqflite.dart';
 import 'dart:io' as io;
 
 class DBHelper{
+ /// In Dart, the underscore (_) at the beginning of a variable or method name indicates private access.
+  /// This means the variable or method is only accessible within the file in which it is declared.
+  /// Like Encapsulation process
 
   static Database? _db;
-
   Future<Database> get db async{
     if(_db != null)
     {
@@ -18,26 +21,21 @@ class DBHelper{
 
   initDatabase() async{
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path,'shopvisit.db');
+    String path = join(documentDirectory.path,'bookIt.db');
     var db = openDatabase(path,version: 1,onCreate: _onCreate);
     return db;
   }
-
   _onCreate(Database db, int version){
-    // AddShop Database
-    db.execute("CREATE TABLE addShop(id INTEGER PRIMARY KEY, shopName TEXT,city SELECTED,shopAddress TEXT,ownerName TEXT,ownerCNIC TEXT,phoneNumber TEXT,alterPhoneNumber TEXT )");
-    //ShopVisit Database
-    db.execute("CREATE TABLE shopvisit(id INTEGER PRIMARY KEY, brand TEXT, shopName TEXT, shopAddress TEXT, ShopOwner TEXT, bookerName TEXT,photoPath TEXT, feedback TEXT, shopId TEXT)");
-    //confirm order.
-    db.execute("CREATE TABLE confirmorder(id INTEGER PRIMARY KEY, shopName TEXT, ownerName TEXT , phoneNumber TEXT, brand TEXT, total REAL,credit TEXT, requireDelivery TEXT)");
-    //Reconfirm Order
-    db.execute("CREATE TABLE confirmorder(id INTEGER PRIMARY KEY, orderId TEXT, customerName TEXT, phoneNumber TEXT, description TEXT, qty TEXT,amount TEXT, total REAL, creditLimit TEXT, required TEXT)");
+    db.execute("CREATE TABLE $orderMasterTableName(id INTEGER PRIMARY KEY,shopName TEXT,ownerName TEXT, phoneNumber TEXT,brand TEXT,total INGEGER, creditLimit TEXT, requiredDelivery TEXT)");
+    // Database Table
+    db.execute("CREATE TABLE $addShopTableName(id INTEGER PRIMARY KEY, shopName TEXT,city SELECTED,shopAddress TEXT,ownerName TEXT,ownerCNIC TEXT,phoneNumber TEXT, alterPhoneNumber TEXT )");
+    db.execute("CREATE TABLE $shopVisitTableName(id INTEGER PRIMARY KEY, brand TEXT, shopName TEXT, shopAddress TEXT, ShopOwner TEXT, bookerName TEXT,photoPath TEXT, feedback TEXT, shopId TEXT)");
 
-    // Return Form
-     db.execute("CREATE TABLE returnform(id INTEGER PRIMARY KEY, selectShop TEXT, item TEXT, qty INTEGER, reason TEXT)");
+    //print('Order Master table Name: $orderMasterTableName');
 
-    // Child Table of Return Form
-     db.execute("CREATE TABLE returnform_details(id INTEGER PRIMARY KEY, returnFormId INTEGER, itemName TEXT, qty INTEGER, reason TEXT, FOREIGN KEY(returnFormId) REFERENCES returnform(id))");
+    //db.execute("CREATE TABLE $orderDetailsTableName (id INTEGER PRIMARY KEY, product TEXT, quantity TEXT, inStock INTEGER, rate REAL, amount REAL, orderMasterId INTEGER, FOREIGN KEY(orderMasterId) REFERENCES $orderMasterTableName(id)");
+    db.execute("CREATE TABLE $returnFormMasterTableName(id INTEGER PRIMARY KEY, selectShop TEXT,date TEXT)");
+    db.execute("CREATE TABLE $returnFormDetailsTableName(id INTEGER PRIMARY KEY, returnFormMasterTableNameId INTEGER, itemName TEXT, qty INTEGER, reason TEXT, FOREIGN KEY(returnFormMasterTableNameId) REFERENCES $returnFormMasterTableName(id))");
   }
 
 }

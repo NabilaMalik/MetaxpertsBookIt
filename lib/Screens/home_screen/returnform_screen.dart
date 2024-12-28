@@ -6,15 +6,12 @@ class ReturnformScreen extends StatefulWidget {
   @override
   _ReturnformScreenState createState() => _ReturnformScreenState();
 }
-
 class _ReturnformScreenState extends State<ReturnformScreen> {
   // Dropdown items and selected value
   final List<String> _shops = ["Shop 1", "Shop 2", "Shop 3", "Shop 4"];
   String? _selectedShop; // Holds the selected shop value
-
   // List of rows (each row contains controllers for the text fields)
   final List<Map<String, dynamic>> _rows = [];
-
   // A helper method to build TextField widgets with custom decoration
   Widget _buildTextField({
     required String label,

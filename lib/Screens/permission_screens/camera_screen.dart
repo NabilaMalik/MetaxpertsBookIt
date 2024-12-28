@@ -1,9 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:order_booking_app/screens/addshop_screen.dart';
-import 'package:order_booking_app/screens/location_screen.dart';
 
+import '../home_screen/addshop_screen.dart';
+import 'location_screen.dart';
 class CameraScreen extends StatelessWidget {
   const CameraScreen({super.key});
 

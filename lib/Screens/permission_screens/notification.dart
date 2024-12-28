@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:order_booking_app/screens/login_screen.dart';
-import 'package:order_booking_app/screens/recoveryform_screen.dart';
+
+import '../home_screen/recoveryform_screen.dart';
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
   @override

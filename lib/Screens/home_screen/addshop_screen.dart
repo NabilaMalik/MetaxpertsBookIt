@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../viewmodel/add_shop_view_model.dart';
+import '../../viewmodel/add_shop_view_model.dart';
 import 'package:order_booking_app/model/add_shop_model.dart'; // Consistent import
-import '../widgets/rounded_button.dart';
+import '../../widgets/rounded_button.dart';
 
 class AddshopScreen extends StatefulWidget {
   const AddshopScreen({super.key});
@@ -287,8 +287,7 @@ class _AddshopScreenState extends State<AddshopScreen> {
                                   return InkWell(
                                     onTap: () {
                                       setState(() {
-                                        addShopId =
-                                            addShopViewModel.allAddShop[index].id;
+                                        addShopId = addShopViewModel.allAddShop[index].id;
                                         shopNameController.text = addShopViewModel.allAddShop[index].shopName!;
                                         cityController.text = addShopViewModel.allAddShop[index].city!;
                                         shopAddressController.text = addShopViewModel.allAddShop[index].shopAddress!;
@@ -301,7 +300,7 @@ class _AddshopScreenState extends State<AddshopScreen> {
                                     child: Card(
                                       child: ListTile(
                                         title: Text(
-                                            '${addShopViewModel.allAddShop[index].shopName} - ${addShopViewModel.allAddShop[index].city}'),
+                                            '${addShopViewModel.allAddShop[index].shopName} - ${addShopViewModel.allAddShop[index].city} - ${addShopViewModel.allAddShop[index].shopAddress} - ${addShopViewModel.allAddShop[index].ownerName} - ${addShopViewModel.allAddShop[index].ownerCNIC} - ${addShopViewModel.allAddShop[index].phoneNumber} - ${addShopViewModel.allAddShop[index].alterPhoneNumber}'),
                                         trailing: IconButton(
                                           icon: const Icon(
                                             Icons.delete,

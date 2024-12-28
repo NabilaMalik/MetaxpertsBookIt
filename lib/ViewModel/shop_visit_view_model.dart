@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../model/shop_visit_model.dart';
 import '../repositories/shop_visit_repository.dart';
 
-class AddShopViewModel extends GetxController{
+class ShopVisitViewModel extends GetxController{
 
   var allShopVisit = <ShopVisitModel>[].obs;
   ShopVisitRepository shopvisitRepository = ShopVisitRepository();
@@ -31,7 +31,7 @@ class AddShopViewModel extends GetxController{
     fetchAllShopVisit();
   }
 
-  deleteAddShop(int id){
+  deleteShopVisit(int id){
     shopvisitRepository.delete(id);
     fetchAllShopVisit();
   }

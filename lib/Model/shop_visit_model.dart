@@ -4,7 +4,7 @@ class ShopVisitModel{
   String? brand;
   String? shopName;
   String? shopAddress;
-  String? ShopOwner;
+  String? shopOwner;
   String? bookerName;
   String? photoPath;
   String? feedback;
@@ -15,7 +15,7 @@ class ShopVisitModel{
     this.brand,
     this.shopName,
     this.shopAddress,
-    this.ShopOwner,
+    this.shopOwner,
     this.bookerName,
     this.photoPath,
     this.feedback,
@@ -29,7 +29,7 @@ class ShopVisitModel{
         brand: json['brand'],
         shopName: json['shopName'],
         shopAddress: json['shopAddress'],
-        ShopOwner: json['ShopOwner'],
+        shopOwner: json['ShopOwner'],
         bookerName: json['bookerName'],
         photoPath: json['photoPath'],
         feedback: json['feedback'],
@@ -44,7 +44,7 @@ class ShopVisitModel{
       'brand':brand,
       'shopName':shopName,
       'shopAddress':shopAddress,
-      'ShopOwner':ShopOwner,
+      'ShopOwner':shopOwner,
       'bookerName':bookerName,
       'photoPath':photoPath,
       'feedback':feedback,
