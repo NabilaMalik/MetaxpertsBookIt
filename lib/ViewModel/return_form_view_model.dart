@@ -1,9 +1,6 @@
-
 import 'package:get/get.dart';
-
 import '../Model/return_form_model.dart';
 import '../Repositories/return_form_repository.dart';
-
 class ReturnFormViewModel extends GetxController{
 
   var allReturnForm = <ReturnFormModel>[].obs;

@@ -257,13 +257,7 @@ class _AddshopScreenState extends State<AddshopScreen> {
                                           phoneNumber: phoneNumberController.text,
                                           alterPhoneNumber: alterPhoneNumberController.text,
                                         ));
-                                        shopNameController.clear();
-                                        cityController.clear();
-                                        shopAddressController.clear();
-                                        ownerNameController.clear();
-                                        ownerCNICController.clear();
-                                        phoneNumberController.clear();
-                                        alterPhoneNumberController.clear();
+
                                       }
                                     },
                                     child: const Text("Save"),

@@ -10,15 +10,11 @@ class ReconfirmOrderScreen extends StatefulWidget {
 }
 class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
   final reconfirmorderViewModel = Get.put(ReConfirmOrderViewModel());
-  final orderIdController = TextEditingController();
-  final customerNameController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final qtyController = TextEditingController();
-  final amountController = TextEditingController();
-  final totalController = TextEditingController();
-  final creditLimitController = TextEditingController();
-  final requiredController = TextEditingController();
+  final productController = TextEditingController();
+  final quantityController = TextEditingController();
+  final inStockController = TextEditingController();
+  final rateController = TextEditingController();
+  final amounTController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   // A helper method to build TextField widgets with custom decoration
@@ -47,15 +43,11 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
   }
   @override
   void dispose() {
-    orderIdController.dispose();
-    customerNameController.dispose();
-    phoneNumberController.dispose();
-    descriptionController.dispose();
-    qtyController.dispose();
-    amountController.dispose();
-    totalController.dispose();
-    creditLimitController.dispose();
-    requiredController.dispose();
+    productController.dispose();
+    quantityController.dispose();
+    inStockController.dispose();
+    rateController.dispose();
+    amounTController.dispose();
     super.dispose();
   }
   @override
@@ -257,27 +249,19 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           reconfirmorderViewModel.addReConfirmOrder(ReConfirmOrderModel(
-                            id: null,
-                            orderId: orderIdController.text,
-                            customerName: customerNameController.text,
-                            phoneNumber: phoneNumberController.text,
-                            description: descriptionController.text,
-                            qty: qtyController.text,
-                            amount: amountController.text,
-                            total: totalController.text,
-                            creditLimit: creditLimitController.text,
-                            required: requiredController.text,
+                            product:  productController.text,
+                            quantity: quantityController.text,
+                            inStock: inStockController.text,
+                            rate: rateController.text,
+                            amounT: amounTController.text,
+
                           ));
-                          orderIdController.clear();
-                          customerNameController.clear();
-                          phoneNumberController.clear();
-                          descriptionController.clear();
-                          qtyController.clear();
-                          phoneNumberController.clear();
-                          amountController.clear();
-                          totalController.clear();
-                          creditLimitController.clear();
-                          requiredController.clear();
+                          productController.clear();
+                          quantityController.clear();
+                          inStockController.clear();
+                          rateController.clear();
+                          amounTController.clear();
+
                         }
                       },
                       child: const Text("ReConfirm"),

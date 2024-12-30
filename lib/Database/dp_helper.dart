@@ -33,9 +33,10 @@ class DBHelper{
 
     //print('Order Master table Name: $orderMasterTableName');
 
-    //db.execute("CREATE TABLE $orderDetailsTableName (id INTEGER PRIMARY KEY, product TEXT, quantity TEXT, inStock INTEGER, rate REAL, amount REAL, orderMasterId INTEGER, FOREIGN KEY(orderMasterId) REFERENCES $orderMasterTableName(id)");
-    db.execute("CREATE TABLE $returnFormMasterTableName(id INTEGER PRIMARY KEY, selectShop TEXT,date TEXT)");
-    db.execute("CREATE TABLE $returnFormDetailsTableName(id INTEGER PRIMARY KEY, returnFormMasterTableNameId INTEGER, itemName TEXT, qty INTEGER, reason TEXT, FOREIGN KEY(returnFormMasterTableNameId) REFERENCES $returnFormMasterTableName(id))");
+    db.execute("CREATE TABLE $orderDetailsTableName (id INTEGER PRIMARY KEY, product TEXT, quantity TEXT, inStock INTEGER, rate REAL, amounT REAL, orderMasterId INTEGER, FOREIGN KEY(orderMasterId) REFERENCES $orderMasterTableName(id))");
+    db.execute("CREATE TABLE $returnFormMasterTableName(returnMasterId INTEGER PRIMARY KEY, selectShop TEXT)");
+    db.execute("CREATE TABLE $returnFormDetailsTableName(id INTEGER PRIMARY KEY, returnMasterId INTEGER, item TEXT, qty INTEGER, reason TEXT, FOREIGN KEY(returnMasterId) REFERENCES $returnFormMasterTableName(returnMasterId))");
+    db.execute("CREATE TABLE $recoveryFormTableName(id INTEGER PRIMARY KEY, shopName TEXT,date TEXT,currentBalance TEXT)");
   }
 
 }
