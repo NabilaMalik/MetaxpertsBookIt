@@ -4,6 +4,6 @@ final orderMasterTableName = "orderMaster";
 final orderDetailsTableName = "orderDetails";
 final returnFormMasterTableName = "reConfirmOrder";
 final returnFormDetailsTableName = "returnFormDetails";
-final recoveryFormTableName = "returnFormDetails";
+final recoveryFormTableName = "recoveryForm";
 
 

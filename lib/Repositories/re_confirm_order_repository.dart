@@ -7,14 +7,14 @@ class ReConfirmOrderRepository{
   DBHelper dbHelper = DBHelper();
   Future<List<ReConfirmOrderModel>> getReConfirmOrder() async{
     var dbClient = await dbHelper.db;
-    List<Map> maps = await dbClient.query(orderDetailsTableName,columns: ['id','product','quantity','inStock','rate','amount' ]);
+    List<Map> maps = await dbClient.query(orderDetailsTableName,columns: ['id','product','quantity','inStock','rate','amount','orderMasterId' ]);
     List<ReConfirmOrderModel> reconfirmorder = [];
     for(int i = 0; i<maps.length; i++)
     {
       reconfirmorder.add(ReConfirmOrderModel.fromMap(maps[i]));
     }
     if (kDebugMode) {
-      print('Raw data from database:');
+      print('OrderDetails Raw data from database:');
     }
     for (var map in maps) {
       if (kDebugMode) {

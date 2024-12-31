@@ -1,5 +1,5 @@
 class ConfirmOrderModel{
-  int? id;
+  int? orderMasterId;
   String? shopName;
   String? ownerName;
   String? phoneNumber;
@@ -9,7 +9,7 @@ class ConfirmOrderModel{
   String? requiredDelivery;
 
   ConfirmOrderModel({
-    this.id,
+    this.orderMasterId,
     this.shopName,
     this.ownerName,
     this.phoneNumber,
@@ -20,7 +20,7 @@ class ConfirmOrderModel{
   });
   factory ConfirmOrderModel.fromMap(Map<dynamic,dynamic> json){
     return ConfirmOrderModel(
-      id: json['id'],
+      orderMasterId: json['orderMasterId'],
       shopName: json['shopName'],
       ownerName: json['ownerName'],
       phoneNumber: json['phoneNumber'],
@@ -33,7 +33,7 @@ class ConfirmOrderModel{
 
   Map<String, dynamic> toMap(){
     return{
-      'id':id,
+      'orderMasterId':orderMasterId,
       'shopName':shopName,
       'ownerName':ownerName,
       'phoneNumber':phoneNumber,

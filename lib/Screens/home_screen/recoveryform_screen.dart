@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../Model/recovery_form_model.dart';
+import '../../ViewModel/recovery_form_view_model.dart';
+
 class RecoveryformScreen extends StatefulWidget {
   const RecoveryformScreen({super.key});
 
@@ -7,37 +11,35 @@ class RecoveryformScreen extends StatefulWidget {
 }
 
 class _RecoveryformScreenState extends State<RecoveryformScreen> {
+  final recoveryformViewModel = Get.put(RecoveryFormViewModel());
+  final currentBalanceController = TextEditingController();
+  final cashRecoveryController = TextEditingController();
+  final newBalanceController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   // Dropdown items and selected value
-  final List<String> _shops = ["Shop 1", "Shop 2", "Shop 3", "Shop 4"];
-  String? _selectedShop; // Holds the selected shop value
+  final List<String> _shops = [
+    "Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5",
+    "Shop 6", "Shop 7", "Shop 8", "Shop 9", "Shop 10"
+  ];
+  String? _selectedShopName;
 
-  // Controller for date fields
-  final TextEditingController _startDateController = TextEditingController();
-  final TextEditingController _endDateController = TextEditingController();
-
-  // Sample data for the data table (replace this with your dynamic data)
+  // Dummy payment history data
   final List<Map<String, String>> _paymentHistory = [
     {"Date": "2024-12-01", "Amount": "\$100", "Status": "Completed"},
     {"Date": "2024-12-05", "Amount": "\$50", "Status": "Pending"},
     {"Date": "2024-12-10", "Amount": "\$200", "Status": "Completed"},
   ];
 
-  // Method to show a date picker
-  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (pickedDate != null) {
-      setState(() {
-        controller.text = "${pickedDate.toLocal()}".split(' ')[0];
-      });
-    }
+  @override
+  void dispose() {
+    currentBalanceController.dispose();
+    cashRecoveryController.dispose();
+    newBalanceController.dispose();
+    super.dispose();
   }
 
-  // A helper method to build TextField widgets with custom decoration
+  // Method to build text fields
   Widget _buildTextField({
     required String label,
     required TextInputType keyboardType,
@@ -59,10 +61,39 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
         decoration: InputDecoration(
           hintText: label,
           hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
-          border: const UnderlineInputBorder(), // Adds a bottom border
+          border: const UnderlineInputBorder(),
         ),
       ),
     );
+  }
+
+  // Method to handle form submission
+  void _handleSubmit() {
+    if (_formKey.currentState!.validate()) {
+      if (_selectedShopName == null) {
+        Get.snackbar("Error", "Please select a shop before submitting.",
+            snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+        return;
+      }
+
+      // Proceed to submit the form
+      recoveryformViewModel.addRecoveryForm(
+        RecoveryFormModel(
+          shopName: _selectedShopName!,
+          currentBalance: currentBalanceController.text,
+          cashRecovery: cashRecoveryController.text,
+          newBalance: newBalanceController.text,
+        ),
+      );
+
+      // Debug prints for validation
+      // print("Selected Shop Name: $_selectedShopName");
+      // print("Cash Recovery: ${cashRecoveryController.text}");
+      // print("New Balance: ${newBalanceController.text}");
+
+      Get.snackbar("Success", "Recovery form submitted successfully!",
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.blue.shade900);
+    }
   }
 
   @override
@@ -85,142 +116,132 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
           height: size.height,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 50),
-                // Dropdown for selecting shop
-                SizedBox(
-                  width: size.width * 0.8, // Adjusts to 80% of screen width
-                  child: DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      labelText: "Shop Name",
-                      labelStyle: TextStyle(fontSize: 18),
-                      border: UnderlineInputBorder(), // Adds a bottom border
-                    ),
-                    value: _selectedShop, // Selected value
-                    items: _shops.map((shop) {
-                      return DropdownMenuItem(
-                        value: shop,
-                        child: Text(shop),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedShop = value; // Update selected shop
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(height: 30),
-                // Row with TextField and text widget aligned on the right
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text(
-                      'Current Balance',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 50),
+                  // Dropdown for selecting shop
+                  SizedBox(
+                    width: size.width * 0.8,
+                    child: DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        labelText: "Shop Name",
+                        labelStyle: TextStyle(fontSize: 18),
+                        border: UnderlineInputBorder(),
                       ),
-                    ),
-                    const SizedBox(width: 30),
-                    // TextField on the right
-                    _buildTextField(
-                      label: "",
-                      keyboardType: TextInputType.text,
-                      width: size.width * 0.36, // Adjusts to 60% of screen width
-                      height: 60,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  "----- Previous Payment History -----",
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                // DataTable for displaying payment history
-                DataTable(
-                  columns: const [
-                    DataColumn(label: Text("Date")),
-                    DataColumn(label: Text("Amount")),
-                    DataColumn(label: Text("Status")),
-                  ],
-                  rows: _paymentHistory.map((payment) {
-                    return DataRow(cells: [
-                      DataCell(Text(payment["Date"] ?? "")),
-                      DataCell(Text(payment["Amount"] ?? "")),
-                      DataCell(Text(payment["Status"] ?? "")),
-                    ]);
-                  }).toList(),
-                ),
-                const SizedBox(height: 30),
-                // Row with text and a text box with underline border horizontally
-                Row(
-                  children: [
-                    const Text(
-                      "Cash Recovery",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    // TextField for Cash Recovery
-                    _buildTextField(
-                      label: "",
-                      keyboardType: TextInputType.text,
-                      width: size.width * 0.5, // Adjusts to 60% of screen width
-                      height: 40,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "New Balance",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    // TextField for New Balance
-                    _buildTextField(
-                      label: "",
-                      keyboardType: TextInputType.text,
-                      width: size.width * 0.5, // Adjusts to 60% of screen width
-                      height: 60,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                // Submit Button
-                ElevatedButton(
-                  onPressed: () {
-                    // Implement your submit action here
-                    print("Form Submitted");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 70),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      value: _selectedShopName,
+                      items: _shops.map((shop) {
+                        return DropdownMenuItem(
+                          value: shop,
+                          child: Text(shop),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedShopName = value;
+                        });
+                      },
                     ),
                   ),
-                  child: const Text(
-                    "Submit",
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text(
+                        'Current Balance',
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      const SizedBox(width: 30),
+                      _buildTextField(
+                        label: "",
+                        keyboardType: TextInputType.text,
+                        width: size.width * 0.36,
+                        height: 60,
+                        controller: currentBalanceController,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  const Text(
+                    "----- Previous Payment History -----",
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  DataTable(
+                    columns: const [
+                      DataColumn(label: Text("Date")),
+                      DataColumn(label: Text("Amount")),
+                      DataColumn(label: Text("Status")),
+                    ],
+                    rows: _paymentHistory.map((payment) {
+                      return DataRow(cells: [
+                        DataCell(Text(payment["Date"] ?? "")),
+                        DataCell(Text(payment["Amount"] ?? "")),
+                        DataCell(Text(payment["Status"] ?? "")),
+                      ]);
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      const Text(
+                        "Cash Recovery",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      const SizedBox(width: 20),
+                      _buildTextField(
+                        label: "",
+                        keyboardType: TextInputType.text,
+                        width: size.width * 0.5,
+                        height: 40,
+                        controller: cashRecoveryController,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "New Balance",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      const SizedBox(width: 30),
+                      _buildTextField(
+                        label: "",
+                        keyboardType: TextInputType.text,
+                        width: size.width * 0.5,
+                        height: 60,
+                        controller: newBalanceController,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _handleSubmit,
+                        child: const Text("Submit"),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blue,
+                          minimumSize: const Size(150, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          textStyle: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(width: 28),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

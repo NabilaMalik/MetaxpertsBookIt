@@ -10,7 +10,7 @@ class ConfirmOrderRepository{
 
   Future<List<ConfirmOrderModel>> getConfirmOrder() async{
     var dbClient = await dbHelper.db;
-    List<Map> maps = await dbClient.query(orderMasterTableName,columns: ['id','shopName','ownerName','phoneNumber','ownerName','total','creditLimit','requiredDelivery' ]);
+    List<Map> maps = await dbClient.query(orderMasterTableName,columns: ['orderMasterId','shopName','ownerName','phoneNumber','ownerName','total','creditLimit','requiredDelivery' ]);
     List<ConfirmOrderModel> confirmorder = [];
     for(int i = 0; i<maps.length; i++)
     {
@@ -36,7 +36,7 @@ class ConfirmOrderRepository{
   Future<int> update(ConfirmOrderModel confirmorderModel) async{
     var dbClient = await dbHelper.db;
     return await dbClient.update(orderMasterTableName, confirmorderModel.toMap(),
-        where: 'id = ?', whereArgs: [confirmorderModel.id]);
+        where: 'id = ?', whereArgs: [confirmorderModel.orderMasterId]);
   }
 
   Future<int> delete(int id) async{

@@ -19,8 +19,9 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
   final phoneNumberController = TextEditingController();
   final brandController = TextEditingController();
   final totalController = TextEditingController();
+  final creditLimitController = TextEditingController();
   final requiredDeliveryController = TextEditingController();
-  int? addShopId;
+  int? orderMasterId;
   final _formKey = GlobalKey<FormState>();
 
   String? selectedCreditLimit; // Variable to hold the selected credit limit
@@ -34,6 +35,7 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
     phoneNumberController.dispose();
     brandController.dispose();
     totalController.dispose();
+    creditLimitController.dispose();
     requiredDeliveryController.dispose();
     super.dispose();
   }
@@ -312,18 +314,14 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
 
   // Filter Products
   void _filterProducts(String query) {
-    setState(() {
-      filteredRows = products.rows.where((row) {
-        return row.cells.any((cell) => cell.value.toString().toLowerCase().contains(query.toLowerCase()));
-      }).toList();
-    });
+    // Implement your filtering logic here
   }
 
   // Submit Form
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       confirmorderViewModel.addConfirmOrder(ConfirmOrderModel(
-        id: null,
+        orderMasterId: null,
         shopName: shopNameController.text,
         ownerName: ownerNameController.text,
         phoneNumber: phoneNumberController.text,
@@ -332,21 +330,14 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
         creditLimit: selectedCreditLimit,
         requiredDelivery: requiredDeliveryController.text,
       ));
-      shopNameController.clear();
-      ownerNameController.clear();
-      phoneNumberController.clear();
-      brandController.clear();
-      totalController.clear();
-      requiredDeliveryController.clear();
-      setState(() {
-        selectedCreditLimit = null;
-      });
-      Get.snackbar('Success', 'Order confirmed successfully!',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+
+      Get.snackbar(
+        'Success',
+        'Order confirmed successfully!',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.blue.shade900,
+        colorText: Colors.white,
+      );
     }
   }
-}
-
-extension on DataCell {
-  get value => null;
 }

@@ -14,7 +14,7 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
   final quantityController = TextEditingController();
   final inStockController = TextEditingController();
   final rateController = TextEditingController();
-  final amounTController = TextEditingController();
+  final amountController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   // A helper method to build TextField widgets with custom decoration
@@ -47,7 +47,7 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
     quantityController.dispose();
     inStockController.dispose();
     rateController.dispose();
-    amounTController.dispose();
+    amountController.dispose();
     super.dispose();
   }
   @override
@@ -253,14 +253,14 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
                             quantity: quantityController.text,
                             inStock: inStockController.text,
                             rate: rateController.text,
-                            amounT: amounTController.text,
+                            amount: amountController.text,
 
                           ));
-                          productController.clear();
-                          quantityController.clear();
-                          inStockController.clear();
-                          rateController.clear();
-                          amounTController.clear();
+                          // productController.clear();
+                          // quantityController.clear();
+                          // inStockController.clear();
+                          // rateController.clear();
+                          // amountController.clear();
 
                         }
                       },
