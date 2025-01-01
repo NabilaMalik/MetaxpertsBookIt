@@ -368,7 +368,7 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 shopvisitViewModel.addShopVisit(ShopVisitModel(
                                   id: shopvisitId,
@@ -379,8 +379,8 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                                   bookerName: bookerNameController.text,
                                   photoPath: photoPathController.text,
                                   feedback: feedbackController.text,
-
                                 ));
+                                await shopvisitViewModel.fetchAllShopVisit();
                                 brandController.clear();
                                 shopNameController.clear();
                                 shopAddressController.clear();

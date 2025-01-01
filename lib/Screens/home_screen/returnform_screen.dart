@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nanoid/nanoid.dart';
 import '../../Model/return_form_model.dart';
 import '../../Model/returnform_details_model.dart';
 import '../../ViewModel/return_form_view_model.dart';
@@ -15,11 +16,12 @@ class ReturnformScreen extends StatefulWidget {
 class _ReturnformScreenState extends State<ReturnformScreen> {
   final returnformViewModel = Get.put(ReturnFormViewModel());
   final returnformdetailsViewModel = Get.put(ReturnFormDetailsViewModel());
-
+  int? returnId;
   final selectShopController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  final List<String> _shops = ["Shop 1", "Shop 2", "Shop 3", "Shop 4"];
+  final List<String> _shops = ["Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5", "Shop 6", "Shop 7", "Shop 8", "Shop 9", "Shop 10", "Shop 11", "Shop 12", "Shop 13", "Shop 14", "Shop 15",];
+
   String? _selectedShop;
 
   final List<TextEditingController> itemControllers = [];
@@ -171,28 +173,38 @@ class _ReturnformScreenState extends State<ReturnformScreen> {
                 const SizedBox(height: 40),
                 // Submit button
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    // Your existing code for submission
+                    var id = await customAlphabet('1234567890', 5);
+                    returnId = int.parse(id);
+
                     // Collect data from all rows
                     List<Map<String, String>> rowData = List.generate(
                       itemControllers.length,
                           (index) => {
-                        'item': itemControllers[index].text,
-                        'qty': qtyControllers[index].text,
-                        'reason': reasonControllers[index].text,
+                            'item':   itemControllers[index].text,
+                            'qty':    qtyControllers[index].text,
+                            'reason': reasonControllers[index].text,
                       },
                     );
-
                     // Save data
+                    print('Return Id:$returnId');
                     returnformViewModel.addReturnForm(
-                      ReturnFormModel(selectShop: _selectedShop),
+                      ReturnFormModel(
+                        returnMasterId: returnId,
+                          selectShop: _selectedShop
+                      ),
                     );
 
                     for (var data in rowData) {
+
                       returnformdetailsViewModel.addReturnFormDetails(
                         ReturnFormDetailsModel(
                           item: data['item']!,
                           qty: data['qty']!,
                           reason: data['reason']!,
+                            returnMasterId: returnId,
+
                         ),
                       );
                     }
@@ -205,10 +217,10 @@ class _ReturnformScreenState extends State<ReturnformScreen> {
 
                     // Clear data
                     setState(() {
-                      _selectedShop = null;
-                      itemControllers.clear();
-                      qtyControllers.clear();
-                      reasonControllers.clear();
+                      // _selectedShop = null;
+                      // itemControllers.clear();
+                      // qtyControllers.clear();
+                      // reasonControllers.clear();
                     });
                   },
                   style: ElevatedButton.styleFrom(

@@ -5,7 +5,6 @@ import '../../ViewModel/recovery_form_view_model.dart';
 
 class RecoveryformScreen extends StatefulWidget {
   const RecoveryformScreen({super.key});
-
   @override
   _RecoveryformScreenState createState() => _RecoveryformScreenState();
 }
@@ -19,8 +18,16 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
 
   // Dropdown items and selected value
   final List<String> _shops = [
-    "Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5",
-    "Shop 6", "Shop 7", "Shop 8", "Shop 9", "Shop 10"
+    "Shop 1",
+    "Shop 2",
+    "Shop 3",
+    "Shop 4",
+    "Shop 5",
+    "Shop 6",
+    "Shop 7",
+    "Shop 8",
+    "Shop 9",
+    "Shop 10"
   ];
   String? _selectedShopName;
 
@@ -30,7 +37,6 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
     {"Date": "2024-12-05", "Amount": "\$50", "Status": "Pending"},
     {"Date": "2024-12-10", "Amount": "\$200", "Status": "Completed"},
   ];
-
   @override
   void dispose() {
     currentBalanceController.dispose();
@@ -75,7 +81,6 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
             snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
         return;
       }
-
       // Proceed to submit the form
       recoveryformViewModel.addRecoveryForm(
         RecoveryFormModel(
@@ -85,21 +90,20 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
           newBalance: newBalanceController.text,
         ),
       );
-
       // Debug prints for validation
       // print("Selected Shop Name: $_selectedShopName");
       // print("Cash Recovery: ${cashRecoveryController.text}");
       // print("New Balance: ${newBalanceController.text}");
 
       Get.snackbar("Success", "Recovery form submitted successfully!",
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.blue.shade900);
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.blue.shade900);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

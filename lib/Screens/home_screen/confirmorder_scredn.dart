@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nanoid/async.dart';
 import '../../Components/products_controller.dart';
 import '../../Model/confirm_order_model.dart';
 import '../../ViewModel/confirm_order_view_model.dart';
+import '../../ViewModel/re_confirm_order_view_model.dart';
+import '../../model/re_confirm_order_model.dart';
 import '../../widgets/rounded_button.dart';
 
 class OrderbookingScreen extends StatefulWidget {
@@ -22,11 +25,62 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
   final creditLimitController = TextEditingController();
   final requiredDeliveryController = TextEditingController();
   int? orderMasterId;
+
+  final reconfirmorderViewModel = Get.put(ReConfirmOrderViewModel());
+  final productController = TextEditingController();
+  final quantityController = TextEditingController();
+  final inStockController = TextEditingController();
+  final rateController = TextEditingController();
+  final amountController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   String? selectedCreditLimit; // Variable to hold the selected credit limit
   List<DataRow> filteredRows = [];
   Products products = Get.put(Products());
+
+  final List<Map<String, String>> productData = [
+    {"Product": "Product 1", "Quantity": "10", "In Stock": "Yes", "Rate": "50", "Amount": "500"},
+    {"Product": "Product 2", "Quantity": "5", "In Stock": "No", "Rate": "100", "Amount": "500"},
+    {"Product": "Product 3", "Quantity": "5", "In Stock": "No", "Rate": "100", "Amount": "500"},
+    {"Product": "Product 4", "Quantity": "55", "In Stock": "No", "Rate": "100", "Amount": "500"},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _generateProductsRows();
+    filteredRows = productsRows;
+  }
+
+  List<DataRow> productsRows = [];
+
+  void _generateProductsRows() {
+    productsRows = productData.map((product) {
+      return DataRow(cells: [
+        DataCell(Text(product["Product"] ?? "")),
+        DataCell(Text(product["Quantity"] ?? "")),
+        DataCell(Text(product["In Stock"] ?? "")),
+        DataCell(Text(product["Rate"] ?? "")),
+        DataCell(Text(product["Amount"] ?? "")),
+      ]);
+    }).toList();
+  }
+
+  void _filterProducts(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredRows = productsRows;
+      } else {
+        filteredRows = productsRows.where((row) {
+          return row.cells.any((cell) {
+            final cellValue = (cell.child as Text).data ?? "";
+            return cellValue.toLowerCase().contains(query.toLowerCase());
+          });
+        }).toList();
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -78,7 +132,7 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
                 _buildDropdown(
                   label: "Credit Limit",
                   icon: Icons.credit_score,
-                  items: ["10,000", "20,000", "50,000", "100,000"],
+                  items: ["10,000", "20,000", "50,000", "100,000", "200,000", "500,000", "1,000,000", "2,000,000"],
                   selectedValue: selectedCreditLimit,
                   onChanged: (value) {
                     setState(() {
@@ -188,7 +242,7 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
                   DataColumn(label: Text('Rate')),
                   DataColumn(label: Text('Amount')),
                 ],
-                rows: filteredRows.isNotEmpty ? filteredRows : products.rows,
+                rows: filteredRows,
               ),
             ),
           ),
@@ -312,16 +366,15 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
     );
   }
 
-  // Filter Products
-  void _filterProducts(String query) {
-    // Implement your filtering logic here
-  }
-
   // Submit Form
-  void _submitForm() {
+  void _submitForm() async {
+    var id = await customAlphabet('1234567890', 5);
+    orderMasterId = int.parse(id);
+
     if (_formKey.currentState!.validate()) {
-      confirmorderViewModel.addConfirmOrder(ConfirmOrderModel(
-        orderMasterId: null,
+      // Add Confirm Order
+      await confirmorderViewModel.addConfirmOrder(ConfirmOrderModel(
+        orderMasterId: orderMasterId,
         shopName: shopNameController.text,
         ownerName: ownerNameController.text,
         phoneNumber: phoneNumberController.text,
@@ -331,6 +384,30 @@ class _OrderbookingScreenState extends State<OrderbookingScreen> {
         requiredDelivery: requiredDeliveryController.text,
       ));
 
+      // Loop through each product row in the filteredRows and add to ReConfirmOrder
+      for (var row in filteredRows) {
+        String product = (row.cells[0].child as Text).data ?? "";
+        String quantity = (row.cells[1].child as Text).data ?? "";
+        String inStock = (row.cells[2].child as Text).data ?? "";
+        String rate = (row.cells[3].child as Text).data ?? "";
+        String amount = (row.cells[4].child as Text).data ?? "";
+
+        // Add ReConfirm Order for each product row
+        await reconfirmorderViewModel.addReConfirmOrder(ReConfirmOrderModel(
+          product: product,
+          quantity: quantity,
+          inStock: inStock,
+          rate: rate,
+          amount: amount,
+          orderMasterId: orderMasterId,
+        ));
+      }
+
+      // Fetch data again after saving
+      await confirmorderViewModel.fetchAllConfirmOrder();
+      await reconfirmorderViewModel.fetchAllReConfirmOrder();
+
+      // Show Success Message
       Get.snackbar(
         'Success',
         'Order confirmed successfully!',

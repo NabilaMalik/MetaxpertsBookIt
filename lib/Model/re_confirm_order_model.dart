@@ -5,6 +5,7 @@ class ReConfirmOrderModel{
   String? inStock;
   String? rate;
   String? amount;
+  int? orderMasterId;
 
   ReConfirmOrderModel({
     this.id,
@@ -13,6 +14,7 @@ class ReConfirmOrderModel{
     this.inStock,
     this.rate,
     this.amount,
+    this.orderMasterId
   });
   factory ReConfirmOrderModel.fromMap(Map<dynamic,dynamic> json){
     return ReConfirmOrderModel(
@@ -22,6 +24,7 @@ class ReConfirmOrderModel{
       inStock: json['inStock'],
       rate:json['rate'],
       amount:json['amount'],
+      orderMasterId: json['orderMasterId']
 
     );}
   Map<String, dynamic> toMap(){
@@ -32,6 +35,7 @@ class ReConfirmOrderModel{
       'inStock':inStock,
       'rate':rate,
       'amount':amount,
+      'orderMasterId':orderMasterId,
     };
   }
 }
