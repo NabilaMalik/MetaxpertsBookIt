@@ -28,7 +28,7 @@ class DBHelper{
   _onCreate(Database db, int version){
     // Database Table
     db.execute("CREATE TABLE $addShopTableName(id INTEGER PRIMARY KEY, shopName TEXT,city SELECTED,shopAddress TEXT,ownerName TEXT,ownerCNIC TEXT,phoneNumber TEXT, alterPhoneNumber TEXT )");
-    db.execute("CREATE TABLE $shopVisitTableName(id INTEGER PRIMARY KEY, brand TEXT, shopName TEXT, shopAddress TEXT, ShopOwner TEXT, bookerName TEXT,photoPath TEXT, feedback TEXT, shopId TEXT)");
+    db.execute("CREATE TABLE $shopVisitTableName(id INTEGER PRIMARY KEY, brand TEXT, shopName TEXT, shopAddress TEXT, ShopOwner TEXT, bookerName TEXT,addPhoto TEXT, feedback TEXT)");
     db.execute("CREATE TABLE $orderMasterTableName(orderMasterId INTEGER PRIMARY KEY,shopName TEXT,ownerName TEXT, phoneNumber TEXT,brand TEXT,total INGEGER, creditLimit TEXT, requiredDelivery TEXT)");
     db.execute("CREATE TABLE $orderDetailsTableName (id INTEGER PRIMARY KEY,orderMasterId INTEGER, product TEXT, quantity TEXT, inStock INTEGER, rate TEXT, amount TEXT, FOREIGN KEY(orderMasterId) REFERENCES $orderMasterTableName(orderMasterId))");
     db.execute("CREATE TABLE $returnFormMasterTableName(returnMasterId INTEGER PRIMARY KEY, selectShop TEXT)");

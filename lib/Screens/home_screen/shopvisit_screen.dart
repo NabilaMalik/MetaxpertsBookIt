@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +22,7 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
   final shopAddressController = TextEditingController();
   final shopOwnerController = TextEditingController();
   final bookerNameController = TextEditingController();
-  final photoPathController = TextEditingController();
+  final addPhotoController = TextEditingController();
   final feedbackController = TextEditingController();
 
   int? shopvisitId;
@@ -37,39 +39,21 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
     '3-Shelf tags and price signage check',
     '4-Expiry date on product reviewed',
   ];
-  // Function to filter data based on query
-  void filterData(String query) {
-    if (query.isEmpty) {
-      setState(() {
-        filteredRows = [];
-      });
-    } else {
-      List<DataRow> tempList = [];
-      String lowerCaseQuery = query.toLowerCase();
-      for (DataRow row in products.rows) {
-        for (DataCell cell in row.cells) {
-          if (cell.child is Text && (cell.child as Text).data!.toLowerCase().contains(lowerCaseQuery)) {
-            tempList.add(row);
-            break;
-          }
-        }
-      }
-      setState(() {
-        filteredRows = tempList;
-      });
-    }
-  }
+
   List<String> brands = ['Brand A', 'Brand B', 'Brand C'];
   List<String> shops = ['Shop X', 'Shop Y', 'Shop Z'];
 
-  XFile? _selectedImage;
+  File? _savedImage;
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _selectedImage = image;
-    });
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      setState(() {
+        _savedImage = File(image.path);
+      });
+    }
   }
 
   @override
@@ -79,7 +63,7 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
     shopAddressController.dispose();
     shopOwnerController.dispose();
     bookerNameController.dispose();
-    photoPathController.dispose();
+    addPhotoController.dispose();
     feedbackController.dispose();
     super.dispose();
   }
@@ -98,7 +82,7 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
           backgroundColor: Colors.blue,
         ),
         body: Container(
-          color: Colors.white, // Background color
+          color: Colors.white,
           width: size.width,
           height: size.height,
           child: SingleChildScrollView(
@@ -145,6 +129,7 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                         },
                       ),
                       _buildTextField(
+                        controller: shopAddressController,
                         label: "Shop Address",
                         icon: Icons.location_on,
                         validator: (value) {
@@ -155,6 +140,7 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                         },
                       ),
                       _buildTextField(
+                        controller: shopOwnerController,
                         label: "Shop Owner",
                         icon: Icons.person_outlined,
                         validator: (value) {
@@ -165,6 +151,7 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                         },
                       ),
                       _buildTextField(
+                        controller: bookerNameController,
                         label: "Booker Name",
                         icon: Icons.person,
                         validator: (value) {
@@ -183,73 +170,53 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Column(
-                        children: [
-
-                          SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: SizedBox(
-                                    height: 400, // Set the desired height
-                                    width: MediaQuery.of(context).size.width * 0.9, // Set the desired width
-                                    child: Card(
-                                      elevation: 5,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
-                                        side: const BorderSide(
-                                          color: Colors.black, // Change the color as needed
-                                          width: 1.0, // Change the width as needed
-                                        ),
-                                      ),
-                                      child: SingleChildScrollView( // Add a vertical ScrollView
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: TextField(
-                                                //  controller: _searchController,
-                                                onChanged: (query) {
-                                                  //    filterData(query);
-                                                },
-                                                decoration: const InputDecoration(
-                                                  labelText: 'Search',
-                                                  hintText: 'Type to search...',
-                                                  prefixIcon: Icon(Icons.search),
-                                                ),
-                                              ),
-                                            ),
-                                            // Wrap the DataTable with Obx
-                                            RepaintBoundary(
-                                              child: ValueListenableBuilder<List<DataRow>>(
-                                                valueListenable: products.rowsNotifier,
-                                                builder: (context, rows, child) {
-                                                  return DataTable(
-                                                    columns: const [
-                                                      DataColumn(label: Text('Product')),
-                                                      DataColumn(label: Text('Quantity')),
-
-                                                    ],
-                                                    rows: filteredRows.isNotEmpty ? filteredRows : rows,
-                                                  );
-                                                },
-                                              ),
-                                            )
-                                          ],
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: SizedBox(
+                            height: 400,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: Card(
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: const BorderSide(color: Colors.black, width: 1.0),
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextField(
+                                        onChanged: (query) {
+                                          // Add filtering logic here
+                                        },
+                                        decoration: const InputDecoration(
+                                          labelText: 'Search',
+                                          hintText: 'Type to search...',
+                                          prefixIcon: Icon(Icons.search),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                    ValueListenableBuilder<List<DataRow>>(
+                                      valueListenable: products.rowsNotifier,
+                                      builder: (context, rows, child) {
+                                        return DataTable(
+                                          columns: const [
+                                            DataColumn(label: Text('Product')),
+                                            DataColumn(label: Text('Quantity')),
+                                          ],
+                                          rows: filteredRows.isNotEmpty ? filteredRows : rows,
+                                        );
+                                      },
+                                    )
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          )
-
-
-                        ],
+                          ),
+                        ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
@@ -299,76 +266,70 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                           ),
                         ),
                       ),
-                      if (_selectedImage != null)
-                        const Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Text(
-                            'Photo Selected!',
-                            style: TextStyle(fontSize: 19, color: Colors.green),
+                      if (_savedImage != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Column(
+                            children: [
+                              const Text(
+                                'Photo Selected!',
+                                style: TextStyle(fontSize: 19, color: Colors.green),
+                              ),
+                              const SizedBox(height: 10),
+                              Image.file(
+                                _savedImage!,
+                                width: 200,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
+                            ],
                           ),
                         ),
+                      // Feedback Section
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Feedback",
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: feedbackController,
+                              maxLines: 5,
+                              style: const TextStyle(fontSize: 18),
+                              decoration: InputDecoration(
+                                hintText: "Enter your feedback here...",
+                                hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Feedback cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+
                       const SizedBox(height: 20),
-                      IconButton(
-                        icon: const Icon(Icons.warning, color: Colors.red, size: 50),
-                        onPressed: () {
-                          // Handle warning logic
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Feedback/Special Note',
-                        style: TextStyle(fontSize: 19, color: Colors.black),
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        width: 340,
-                        height: 170,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue, width: 2.0),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: TextField(
-                          maxLines: null,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(10),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // Handle form submission
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue[900],
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                        ),
-                        child: const Text(
-                          '+Order Booking Form',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      RoundedButton(
-                        text: 'No Order',
-                        press: () {
-                          if (_formKey.currentState!.validate()) {
-                            print("No Order Selected");
-                          }
-                        },
-                      ),
+
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
-                            onPressed: () async {
+                            onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 shopvisitViewModel.addShopVisit(ShopVisitModel(
                                   id: shopvisitId,
@@ -377,26 +338,19 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                                   shopAddress: shopAddressController.text,
                                   shopOwner: shopOwnerController.text,
                                   bookerName: bookerNameController.text,
-                                  photoPath: photoPathController.text,
+                                  addPhoto: addPhotoController.text,
                                   feedback: feedbackController.text,
-                                ));
-                                await shopvisitViewModel.fetchAllShopVisit();
-                                brandController.clear();
-                                shopNameController.clear();
-                                shopAddressController.clear();
-                                shopOwnerController.clear();
-                                bookerNameController.clear();
-                                photoPathController.clear();
-                                feedbackController.clear();
+                                )
+                                );
                               }
                             },
-                            child: const Text("Save"),
+                            child: const Text("+Order Booking Form"),
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Colors.blue, // Button color
-                              minimumSize: Size(150, 50), // Set width and height
+                              backgroundColor: Colors.blue,
+                              minimumSize: const Size(230, 60),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12), // Optional rounded corners
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
@@ -404,38 +358,14 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                           const SizedBox(width: 28),
                         ],
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: shopvisitViewModel.allShopVisit.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                shopvisitId = shopvisitViewModel.allShopVisit[index].id;
-                                brandController.text = shopvisitViewModel.allShopVisit[index].brand!;
-                                shopNameController.text = shopvisitViewModel.allShopVisit[index].shopName!;
-                                shopAddressController.text = shopvisitViewModel.allShopVisit[index].shopAddress!;
-                                shopOwnerController.text = shopvisitViewModel.allShopVisit[index].shopOwner!;
-                                bookerNameController.text = shopvisitViewModel.allShopVisit[index].bookerName!;
-                                photoPathController.text = shopvisitViewModel.allShopVisit[index].photoPath!;
-                              });
-                            },
-                            child: Card(
-                              child: ListTile(
-                                title: Text(
-                                    '${shopvisitViewModel.allShopVisit[index].brand} - ${shopvisitViewModel.allShopVisit[index].shopName} - ${shopvisitViewModel.allShopVisit[index].shopAddress} - ${shopvisitViewModel.allShopVisit[index].shopOwner} - ${shopvisitViewModel.allShopVisit[index].bookerName} - ${shopvisitViewModel.allShopVisit[index].photoPath}'),
-                                trailing: IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () {
-                                    shopvisitViewModel.deleteShopVisit(shopvisitViewModel.allShopVisit[index].id!);
-                                  },
-                                ),
-                              ),
-                            ),
-                          );
+                      const SizedBox(height: 30),
+                      RoundedButton(
+                        text: 'No Order',
+
+                        press: () {
+                          if (_formKey.currentState!.validate()) {
+                            print("No Order Selected");
+                          }
                         },
                       ),
                       const SizedBox(height: 50),
@@ -455,10 +385,12 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
     required IconData icon,
     required String? Function(String?) validator,
     TextInputType keyboardType = TextInputType.text,
+    TextEditingController? controller,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextFormField(
+        controller: controller,
         style: const TextStyle(fontSize: 20),
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.blue),
