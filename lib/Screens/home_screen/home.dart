@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
    // double screenHeight = MediaQuery.of(context).size.height;
-
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView( // Add scrollable functionality
@@ -56,7 +53,6 @@ class UserProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 // Profile Section
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20, top: 30, bottom: 40),
@@ -108,7 +104,6 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 // Action Buttons Section
                 Container(
                   color: Colors.white,
@@ -264,7 +259,6 @@ class UserProfileScreen extends StatelessWidget {
                                   style: TextStyle(fontSize: 12),),
                                 Text("                   ",
                                   style: TextStyle(fontSize: 12),),
-
                               ],
                             ),
                             const SizedBox(height: 30),
@@ -300,7 +294,6 @@ class UserProfileScreen extends StatelessWidget {
       ),
     );
   }
-
   // Reusable Small Box Widget
   Widget _buildSmallBox(int number, Color color) {
     return Container(
@@ -329,7 +322,6 @@ class UserProfileScreen extends StatelessWidget {
       ),
     );
   }
-
   // Reusable Action Box Widget
   Widget _buildActionBox({
     required Color color,

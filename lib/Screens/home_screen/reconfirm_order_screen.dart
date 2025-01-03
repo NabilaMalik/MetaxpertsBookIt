@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nanoid/async.dart';
-
-import '../../ViewModel/re_confirm_order_view_model.dart';
-import '../../model/re_confirm_order_model.dart';
 class ReconfirmOrderScreen extends StatefulWidget {
   const ReconfirmOrderScreen({super.key});
   @override
@@ -42,15 +38,6 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
       ),
     );
   }
-  // @override
-  // void dispose() {
-  //   productController.dispose();
-  //   quantityController.dispose();
-  //   inStockController.dispose();
-  //   rateController.dispose();
-  //   amountController.dispose();
-  //   super.dispose();
-  // }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -241,30 +228,11 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
                   ],
                 ),
                 const SizedBox(height: 30),
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       onPressed: ()  {
-
-                        // if (_formKey.currentState!.validate()) {
-                        //   reconfirmorderViewModel.addReConfirmOrder(ReConfirmOrderModel(
-                        //     product:  productController.text,
-                        //     quantity: quantityController.text,
-                        //     inStock: inStockController.text,
-                        //     rate: rateController.text,
-                        //     amount: amountController.text,
-                        //
-                        //   ));
-                        //   // productController.clear();
-                        //   // quantityController.clear();
-                        //   // inStockController.clear();
-                        //   // rateController.clear();
-                        //   // amountController.clear();
-                        //
-                        // }
                       },
                       child: const Text("ReConfirm"),
                       style: ElevatedButton.styleFrom(
@@ -326,7 +294,6 @@ class _ReconfirmOrderScreenState extends State<ReconfirmOrderScreen> {
                         'Close',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
-
                     ),
                   ],
                 ),

@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class OrderbookingStatusScreen extends StatefulWidget {
   const OrderbookingStatusScreen({super.key});
-
   @override
   _OrderbookingStatusScreenState createState() =>
       _OrderbookingStatusScreenState();
 }
-
 class _OrderbookingStatusScreenState extends State<OrderbookingStatusScreen> {
   // Controller for date fields
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
-
   // Method to show a date picker
   Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
     DateTime? pickedDate = await showDatePicker(
@@ -27,7 +24,6 @@ class _OrderbookingStatusScreenState extends State<OrderbookingStatusScreen> {
       });
     }
   }
-
   // A helper method to build TextField widgets with custom decoration
   Widget _buildTextField({
     required String label,
@@ -55,11 +51,9 @@ class _OrderbookingStatusScreenState extends State<OrderbookingStatusScreen> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

@@ -5,29 +5,22 @@ import '../../Model/return_form_model.dart';
 import '../../Model/returnform_details_model.dart';
 import '../../ViewModel/return_form_view_model.dart';
 import '../../ViewModel/return_form_details_view_model.dart';
-
 class ReturnformScreen extends StatefulWidget {
   const ReturnformScreen({super.key});
-
   @override
   _ReturnformScreenState createState() => _ReturnformScreenState();
 }
-
 class _ReturnformScreenState extends State<ReturnformScreen> {
   final returnformViewModel = Get.put(ReturnFormViewModel());
   final returnformdetailsViewModel = Get.put(ReturnFormDetailsViewModel());
   int? returnId;
   final selectShopController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   final List<String> _shops = ["Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5", "Shop 6", "Shop 7", "Shop 8", "Shop 9", "Shop 10", "Shop 11", "Shop 12", "Shop 13", "Shop 14", "Shop 15",];
-
   String? _selectedShop;
-
   final List<TextEditingController> itemControllers = [];
   final List<TextEditingController> qtyControllers = [];
   final List<TextEditingController> reasonControllers = [];
-
   @override
   void dispose() {
     // Dispose of all controllers
@@ -65,11 +58,9 @@ class _ReturnformScreenState extends State<ReturnformScreen> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return SafeArea(
       child: Scaffold( backgroundColor: Colors.white,
         appBar: AppBar(
@@ -195,32 +186,22 @@ class _ReturnformScreenState extends State<ReturnformScreen> {
                           selectShop: _selectedShop
                       ),
                     );
-
                     for (var data in rowData) {
-
                       returnformdetailsViewModel.addReturnFormDetails(
                         ReturnFormDetailsModel(
                           item: data['item']!,
                           qty: data['qty']!,
                           reason: data['reason']!,
                             returnMasterId: returnId,
-
                         ),
                       );
                     }
-
                     Get.snackbar(
                       "Success",
                       "Form Submitted!",
                       snackPosition: SnackPosition.TOP,
                     );
-
-                    // Clear data
                     setState(() {
-                      // _selectedShop = null;
-                      // itemControllers.clear();
-                      // qtyControllers.clear();
-                      // reasonControllers.clear();
                     });
                   },
                   style: ElevatedButton.styleFrom(

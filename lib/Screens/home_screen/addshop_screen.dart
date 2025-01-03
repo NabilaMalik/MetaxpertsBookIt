@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Model/attendanceOut_model.dart';
+import '../../Model/attendance_Model.dart';
+import '../../Model/location_model.dart';
+import '../../ViewModel/attendance_out_view_model.dart';
+import '../../ViewModel/attendance_view_model.dart';
+import '../../ViewModel/location_view_model.dart';
 import '../../viewmodel/add_shop_view_model.dart';
 import 'package:order_booking_app/model/add_shop_model.dart'; // Consistent import
-import '../../widgets/rounded_button.dart';
-
 class AddshopScreen extends StatefulWidget {
   const AddshopScreen({super.key});
-
   @override
   _AddshopScreenState createState() => _AddshopScreenState();
 }
-
 class _AddshopScreenState extends State<AddshopScreen> {
   final addShopViewModel = Get.put(AddShopViewModel());
   final shopNameController = TextEditingController();
@@ -21,61 +23,13 @@ class _AddshopScreenState extends State<AddshopScreen> {
   final phoneNumberController = TextEditingController();
   final alterPhoneNumberController = TextEditingController();
   int? addShopId;
+  final attendanceViewModel = Get.put(AttendanceViewModel());
+  final attendanceoutViewModel = Get.put(AttendanceOutViewModel());
+LocationViewModel locationViewModel = Get.put(LocationViewModel());
   final _formKey = GlobalKey<FormState>();
   String? selectedCity;
-  List<String> cities = [
-    'Karachi',
-    'Lahore',
-    'Islamabad',
-    'Rawalpindi',
-    'Faisalabad',
-    'Peshawar',
-    'Quetta',
-    'Multan',
-    'Gujranwala',
-    'Sialkot',
-    'Hyderabad',
-    'Sukkur',
-    'Sargodha',
-    'Bahawalpur',
-    'Abbottabad',
-    'Mardan',
-    'Sheikhupura',
-    'Gujrat',
-    'Jhelum',
-    'Kasur',
-    'Okara',
-    'Sahiwal',
-    'Rahim Yar Khan',
-    'Dera Ghazi Khan',
-    'Chiniot',
-    'Nawabshah',
-    'Mirpur Khas',
-    'Khairpur',
-    'Mansehra',
-    'Swat',
-    'Muzaffarabad',
-    'Kotli',
-    'Larkana',
-    'Jacobabad',
-    'Shikarpur',
-    'Hafizabad',
-    'Toba Tek Singh',
-    'Mianwali',
-    'Bannu',
-    'Dera Ismail Khan',
-    'Chaman',
-    'Gwadar',
-    'Zhob',
-    'Lakhdar',
-    'Ghotki',
-    'Snowshed',
-    'Haripur',
-    'Charade'
-  ];
-
+  List<String> cities = ['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Peshawar', 'Quetta', 'Multan', 'Gujranwala', 'Sialkot', 'Hyderabad', 'Sukkur', 'Sargodha', 'Bahawalpur', 'Abbottabad', 'Mardan', 'Sheikhupura', 'Gujrat', 'Jhelum', 'Kasur', 'Okara', 'Sahiwal', 'Rahim Yar Khan', 'Dera Ghazi Khan', 'Chiniot', 'Nawabshah', 'Mirpur Khas', 'Khairpur', 'Mansehra', 'Swat', 'Muzaffarabad', 'Kotli', 'Larkana', 'Jacobabad', 'Shikarpur', 'Hafizabad', 'Toba Tek Singh', 'Mianwali', 'Bannu', 'Dera Ismail Khan', 'Chaman', 'Gwadar', 'Zhob', 'Lakhdar', 'Ghotki', 'Snowshed', 'Haripur', 'Charade'];
   bool _isSwitchOn = false;
-
   @override
   void dispose() {
     shopNameController.dispose();
@@ -87,7 +41,6 @@ class _AddshopScreenState extends State<AddshopScreen> {
     alterPhoneNumberController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -245,7 +198,7 @@ class _AddshopScreenState extends State<AddshopScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   ElevatedButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
                                         addShopViewModel.addAddShop(AddShopModel(
                                           id: null,
@@ -257,7 +210,34 @@ class _AddshopScreenState extends State<AddshopScreen> {
                                           phoneNumber: phoneNumberController.text,
                                           alterPhoneNumber: alterPhoneNumberController.text,
                                         ));
-
+                                        await attendanceViewModel.addAttendance(AttendanceModel(
+                                        date: '03',
+                                        timeIn: 'dddd',
+                                         userId:'wwww',
+                                         latIn: 'vvvwwwwwww',
+                                         lngIn:'vvvvvvvd',
+                                        bookerName:'hhhhhhh',
+                                         designation:'trgergr',
+                                         city:'rergerb',
+                                         address:'fberbe',
+                                        ));
+                                        await attendanceoutViewModel.addAttendanceOut(AttendanceOutModel(
+                                            date: 'xxxssssss',
+                                            timeOut:'ddfsjnjn',
+                                            userId:'dcdcm',
+                                            totalTime:'njdn',
+                                            latOut:'dnush',
+                                          totalDistance:'dcdvvd',
+                                          address:'dcdvvd',
+                                        ));
+                                        await locationViewModel.addLocation(LocationModel(
+                                            date: 'xxxssssss',
+                                            fileName:'ddfsjnjn',
+                                            userId:'dcdcm',
+                                            // body:'cfnf',
+                                            userName:'dnush',
+                                            totalDistance:'dcdvvd',
+                                        ));
                                       }
                                     },
                                     child: const Text("Save"),
@@ -323,7 +303,6 @@ class _AddshopScreenState extends State<AddshopScreen> {
       ),
     );
   }
-
   Widget _buildTextField({
     required String label,
     required IconData icon,
@@ -352,7 +331,6 @@ class _AddshopScreenState extends State<AddshopScreen> {
       ),
     );
   }
-
   Widget _buildCityDropdown({
     required String label,
     required IconData icon,

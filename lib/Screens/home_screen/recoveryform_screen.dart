@@ -2,35 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Model/recovery_form_model.dart';
 import '../../ViewModel/recovery_form_view_model.dart';
-
 class RecoveryformScreen extends StatefulWidget {
   const RecoveryformScreen({super.key});
   @override
   _RecoveryformScreenState createState() => _RecoveryformScreenState();
 }
-
 class _RecoveryformScreenState extends State<RecoveryformScreen> {
   final recoveryformViewModel = Get.put(RecoveryFormViewModel());
   final currentBalanceController = TextEditingController();
   final cashRecoveryController = TextEditingController();
   final newBalanceController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   // Dropdown items and selected value
-  final List<String> _shops = [
-    "Shop 1",
-    "Shop 2",
-    "Shop 3",
-    "Shop 4",
-    "Shop 5",
-    "Shop 6",
-    "Shop 7",
-    "Shop 8",
-    "Shop 9",
-    "Shop 10"
-  ];
+  final List<String> _shops = ["Shop 1", "Shop 2", "Shop 3", "Shop 4", "Shop 5", "Shop 6", "Shop 7", "Shop 8", "Shop 9", "Shop 10"];
   String? _selectedShopName;
-
   // Dummy payment history data
   final List<Map<String, String>> _paymentHistory = [
     {"Date": "2024-12-01", "Amount": "\$100", "Status": "Completed"},
@@ -44,7 +29,6 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
     newBalanceController.dispose();
     super.dispose();
   }
-
   // Method to build text fields
   Widget _buildTextField({
     required String label,
@@ -72,7 +56,6 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
       ),
     );
   }
-
   // Method to handle form submission
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
@@ -90,17 +73,11 @@ class _RecoveryformScreenState extends State<RecoveryformScreen> {
           newBalance: newBalanceController.text,
         ),
       );
-      // Debug prints for validation
-      // print("Selected Shop Name: $_selectedShopName");
-      // print("Cash Recovery: ${cashRecoveryController.text}");
-      // print("New Balance: ${newBalanceController.text}");
-
       Get.snackbar("Success", "Recovery form submitted successfully!",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.blue.shade900);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nanoid/async.dart';
-import 'package:order_booking_app/Database/Util.dart';
 import 'package:order_booking_app/Model/shop_visit_details_model.dart';
 import 'package:order_booking_app/ViewModel/shop_visit_details_view_model.dart';
 import '../../Components/products_controller.dart';
