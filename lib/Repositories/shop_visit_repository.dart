@@ -9,7 +9,7 @@ class ShopVisitRepository{
   DBHelper dbHelper = DBHelper();
   Future<List<ShopVisitModel>> getShopVisit() async{
     var dbClient = await dbHelper.db;
-    List<Map> maps = await dbClient.query(shopVisitTableName,columns: ['id','brand','shopName','shopAddress','ShopOwner','bookerName','addPhoto','feedback' ]);
+    List<Map> maps = await dbClient.query(shopVisitMasterTableName,columns: ['shopVisitMasterId','brand','shopName','shopAddress','ShopOwner','bookerName','walkthrough', 'planogram', 'signage', 'productReviewed','feedback' ,'body']);
     List<ShopVisitModel> shopvisit = [];
     for(int i = 0; i<maps.length; i++)
     {
@@ -27,16 +27,16 @@ class ShopVisitRepository{
   }
   Future<int> add(ShopVisitModel shopvisitModel) async{
     var dbClient = await dbHelper.db;
-    return await dbClient.insert(shopVisitTableName, shopvisitModel.toMap());
+    return await dbClient.insert(shopVisitMasterTableName, shopvisitModel.toMap());
   }
   Future<int> update(ShopVisitModel shopvisitModel) async{
     var dbClient = await dbHelper.db;
-    return await dbClient.update(shopVisitTableName, shopvisitModel.toMap(),
-        where: 'id = ?', whereArgs: [shopvisitModel.id]);
+    return await dbClient.update(shopVisitMasterTableName, shopvisitModel.toMap(),
+        where: 'id = ?', whereArgs: [shopvisitModel.shopVisitMasterId]);
   }
   Future<int> delete(int id) async{
     var dbClient = await dbHelper.db;
-    return await dbClient.delete(shopVisitTableName,
+    return await dbClient.delete(shopVisitMasterTableName,
         where: 'id = ?', whereArgs: [id]);
   }
 }

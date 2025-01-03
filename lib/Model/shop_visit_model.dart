@@ -1,21 +1,32 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 class ShopVisitModel{
 
-  int? id;
+  int? shopVisitMasterId;
   String? brand;
   String? shopName;
   String? shopAddress;
   String? shopOwner;
   String? bookerName;
-  String? addPhoto;
+  dynamic? walkthrough;
+  dynamic? planogram;
+  dynamic? signage;
+  dynamic? productReviewed;
+  Uint8List? addPhoto;
   String? feedback;
 
   ShopVisitModel({
-    this.id,
+    this.shopVisitMasterId,
     this.brand,
     this.shopName,
     this.shopAddress,
     this.shopOwner,
     this.bookerName,
+    this.walkthrough,
+    this.planogram,
+    this.signage,
+    this.productReviewed,
     this.addPhoto,
     this.feedback,
   });
@@ -23,13 +34,20 @@ class ShopVisitModel{
 
   factory ShopVisitModel.fromMap(Map<dynamic,dynamic> json){
     return ShopVisitModel(
-        id: json['id'],
+      shopVisitMasterId: json['shopVisitMasterId'],
         brand: json['brand'],
         shopName: json['shopName'],
         shopAddress: json['shopAddress'],
         shopOwner: json['ShopOwner'],
         bookerName: json['bookerName'],
-        addPhoto: json['addPhoto'],
+      walkthrough: json['walkthrough'] == 1 || json['walkthrough'] == 'true' || json['walkthrough'] == true,
+      planogram: json['planogram'] == 1 || json['planogram'] == 'true' || json['planogram'] == true,
+      signage: json['signage'] == 1 || json['signage'] == 'true' || json['signage'] == true,
+      productReviewed: json['productReviewed'] == 1 || json['productReviewed'] == 'true' || json['productReviewed'] == true,
+
+        addPhoto: json['body'] != null && json['body'].toString().isNotEmpty
+          ? Uint8List.fromList(base64Decode(json['body'].toString()))
+          : null,
         feedback: json['feedback'],
 
     );
@@ -38,13 +56,17 @@ class ShopVisitModel{
   Map<String, dynamic> toMap(){
     return{
 
-      'id':id,
+      'shopVisitMasterId':shopVisitMasterId,
       'brand':brand,
       'shopName':shopName,
       'shopAddress':shopAddress,
       'ShopOwner':shopOwner,
       'bookerName':bookerName,
-      'addPhoto':addPhoto,
+      'walkthrough':walkthrough,
+      'planogram':planogram,
+      'signage':signage,
+      'productReviewed':productReviewed,
+      'body': addPhoto != null ? base64Encode(addPhoto!) : null,
       'feedback':feedback,
     };
   }

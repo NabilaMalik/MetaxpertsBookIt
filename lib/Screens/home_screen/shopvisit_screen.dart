@@ -1,8 +1,13 @@
+import 'dart:convert'; // For Base64 encoding
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nanoid/async.dart';
+import 'package:order_booking_app/Database/Util.dart';
+import 'package:order_booking_app/Model/shop_visit_details_model.dart';
+import 'package:order_booking_app/ViewModel/shop_visit_details_view_model.dart';
 import '../../Components/products_controller.dart';
 import '../../ViewModel/shop_visit_view_model.dart';
 import '../../model/shop_visit_model.dart';
@@ -14,7 +19,6 @@ class ShopvisitScreen extends StatefulWidget {
   @override
   _ShopvisitScreenState createState() => _ShopvisitScreenState();
 }
-
 class _ShopvisitScreenState extends State<ShopvisitScreen> {
   final shopvisitViewModel = Get.put(ShopVisitViewModel());
   final brandController = TextEditingController();
@@ -22,10 +26,17 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
   final shopAddressController = TextEditingController();
   final shopOwnerController = TextEditingController();
   final bookerNameController = TextEditingController();
-  final addPhotoController = TextEditingController();
+  bool walkthroughController = false;
+  bool planogramController = false;
+  bool signageController = false;
+  bool productReviewedController = false;
+  File? addPhotoController;
   final feedbackController = TextEditingController();
-
-  int? shopvisitId;
+  final checklistLabelsController = TextEditingController();
+  int? shopVisitMasterId;
+  final shopvisitdetailsViewModel = Get.put(ShopVisitDetailsViewModel());
+  final productController = TextEditingController();
+  final quantityController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   String? selectedBrand;
@@ -44,18 +55,58 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
   List<String> shops = ['Shop X', 'Shop Y', 'Shop Z'];
 
   File? _savedImage;
-
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
 
     if (image != null) {
       setState(() {
-        _savedImage = File(image.path);
+        addPhotoController = File(image.path); // Assign the image to addPhotoController
       });
     }
   }
 
+
+  final List<Map<String, String>> productData = [
+    {"Product": "Product 1", "Quantity": "10"},
+    {"Product": "Product 2", "Quantity": "5"},
+    {"Product": "Product 3", "Quantity": "5"},
+    {"Product": "Product 4", "Quantity": "55"},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _generateProductsRows();
+    filteredRows = productsRows;
+  }
+
+  List<DataRow> productsRows = [];
+
+  void _generateProductsRows() {
+    productsRows = productData.map((product) {
+      return DataRow(cells: [
+        DataCell(Text(product["Product"] ?? "")),
+        DataCell(Text(product["Quantity"] ?? "")),
+
+      ]);
+    }).toList();
+  }
+
+  void _filterProducts(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredRows = productsRows;
+      } else {
+        filteredRows = productsRows.where((row) {
+          return row.cells.any((cell) {
+            final cellValue = (cell.child as Text).data ?? "";
+            return cellValue.toLowerCase().contains(query.toLowerCase());
+          });
+        }).toList();
+      }
+    });
+  }
   @override
   void dispose() {
     brandController.dispose();
@@ -63,7 +114,6 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
     shopAddressController.dispose();
     shopOwnerController.dispose();
     bookerNameController.dispose();
-    addPhotoController.dispose();
     feedbackController.dispose();
     super.dispose();
   }
@@ -329,19 +379,44 @@ class _ShopvisitScreenState extends State<ShopvisitScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                            onPressed: () async {
+      var id = await customAlphabet('1234567890', 5);
+      shopVisitMasterId = int.parse(id);
+      if (_formKey.currentState!.validate()) {
+                                Uint8List? photoBase64;
+                                if (addPhotoController != null) {
+                                  final bytes = await addPhotoController!.readAsBytes();
+                                  photoBase64 =bytes; // Convert image bytes to Base64
+                                }
+
                                 shopvisitViewModel.addShopVisit(ShopVisitModel(
-                                  id: shopvisitId,
-                                  brand: selectedBrand,
-                                  shopName: selectedShop,
-                                  shopAddress: shopAddressController.text,
-                                  shopOwner: shopOwnerController.text,
-                                  bookerName: bookerNameController.text,
-                                  addPhoto: addPhotoController.text,
-                                  feedback: feedbackController.text,
-                                )
+                                    shopVisitMasterId: shopVisitMasterId,
+                                    brand: selectedBrand,
+                                    shopName: selectedShop,
+                                    walkthrough: walkthroughController,
+                                    planogram:planogramController,
+                                    signage:signageController,
+                                    productReviewed:productReviewedController,
+                                    shopAddress: shopAddressController.text,
+                                    shopOwner: shopOwnerController.text,
+                                    bookerName: bookerNameController.text,
+                                    addPhoto: photoBase64, // Pass the Base64-encoded photo
+                                    feedback: feedbackController.text,
+                                  ),
                                 );
+                                for (var row in filteredRows) {
+                                  String product = (row.cells[0].child as Text).data ?? "";
+                                  String quantity = (row.cells[1].child as Text).data ?? "";
+
+
+                                  // Add ReConfirm Order for each product row
+                                  await shopvisitdetailsViewModel.addShopVisitDetails(ShopVisitDetailsModel(
+                                    product: product,
+                                    quantity: quantity,
+                                    shopVisitMasterId: shopVisitMasterId,
+                                  ));
+                                }
+                                Get.snackbar('Success', 'Shop Visit added successfully!', snackPosition: SnackPosition.BOTTOM);
                               }
                             },
                             child: const Text("+Order Booking Form"),
